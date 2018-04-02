@@ -44,7 +44,7 @@
           </ul>
         </div>
       </div>
-
+ 
       <!-- Price count -->
       <div class="price-count-wrap">
         <div class="price-count">
