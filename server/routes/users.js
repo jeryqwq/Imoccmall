@@ -172,16 +172,16 @@ user.findOne({
      }
     });
       });
-      //前端传递过来的结算数据与数据库进行对比无错后再进行付款，避免金额数量被其他开发者修改
+      //前端传递过来的结算数据与数据库进行对比无错后再进行付款，避免金额数量被修改
       if(myTotalPrice==totalPrice){
-        //可在此处调用支付宝支付借口，完成支付后重定向到物流页面
+        //可在此处调用支付宝支付借口，完成支付后根据状态值前端再次选择渲染页面
         data.save((err,data)=>{
           if(err){
             console.log(err.message);
-            // res.json({
-            //   status:1,
-            //   msg:err.message
-            // })
+            res.json({
+              status:1,
+              msg:err.message
+            })
           }else{
 console.log('用户信息更新成功！！！');
           }

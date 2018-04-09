@@ -78,7 +78,7 @@
 
     <order-success v-show="checkStatas==4"></order-success>
 <!-- Cartlist-->
-
+<pay-money v-show="checkStatas==3"></pay-money>
 <pay-list v-show="checkStatas==2"></pay-list>
       <!-- address list -->
       <div v-show="checkStatas==1">
@@ -150,8 +150,8 @@
       </div>
       </div>
       <div class="next-btn-wrap">
-          <a class="btn btn--m btn--m" style="float:left" @click="changeStatus(0)">上一步</a>
-        <a class="btn btn--m btn--red" @click="changeStatus(1)">下一步</a>
+          <a class="btn btn--m btn--m " :class="{'btn--dis':checkStatas==4}" style="float:left" @click="changeStatus(0)">上一步</a>
+        <a class="btn btn--m btn--red" :class="{'btn--dis':checkStatas==4}" @click="changeStatus(1)">下一步</a>
       </div>
     </div>
   </div>
@@ -163,6 +163,7 @@
 import NavFooter from '@/components/Footer'
 import NavHeader from '@/components/Header'
 import axios from 'axios'
+import PayMoney from '@/components/PayMoney'
 import Model from '@/components/Model'
 import PayList from '@/components/PayList'
 import OrderSuccess from '@/components/Success'
@@ -186,7 +187,8 @@ export default {
       NavHeader:NavHeader,
       Model:Model,
       PayList:PayList,
-      OrderSuccess:OrderSuccess
+      OrderSuccess:OrderSuccess,
+      PayMoney:PayMoney
   },
   mounted(){
     this.getAddress();
@@ -201,9 +203,27 @@ return this.addressList.slice(0,this.limit);
   },
   totalPrice(){
     return this.$store.state.totalPrice;
-  }
+  },
+  toBackEndCheckList(){
+    return this.$store.state.toBackEndCheckList;
+  },
 },
   methods:{
+    checkData(){
+axios.post('users/accountant',{
+accountantProduct:this.toBackEndCheckList,
+totalPrice:this.totalPrice
+}).then((res)=>{
+  console.log(res);
+if(res.data.status==0){
+ console.log('结算成功')
+}else{
+  this.checkStatas=3;
+  alert(res.data.msg);
+
+}
+})
+    },
 expend(){
 if(this.limit==3){
   this.limit=this.addressList.length;
@@ -211,6 +231,13 @@ if(this.limit==3){
   this.limit=3;
 }
 },
+          getCartCount(){
+axios.get('users/getCartCount').then((res)=>{
+if(res.data.status==0){
+  this.$store.commit('updateCartCount',res.data.result);
+}
+})
+          },
     choose(index){
 this.addressList.forEach((element,i) => {
   if(index==i){
@@ -269,14 +296,23 @@ if(res.data.status==0){
   },
   changeStatus(num){
 if(num==1){
- 
     if(this.checkStatas>=4){
       return;
     }
    this.checkStatas++;
+   if(this.checkStatas==4){
+this.checkData();
+setTimeout(() => {
+  this.getCartCount();
+}, 1000);
+   }
   }else{
     
     if(this.checkStatas<=1){
+      return;
+    }
+    else if(this.checkStatas==4){
+      this.checkStatas=4;
       return;
     }
      this.checkStatas--;

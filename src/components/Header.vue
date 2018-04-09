@@ -13,8 +13,16 @@
           </div>
           <div class="navbar-right-container" style="display: flex;">
             <div class="navbar-menu-container">
-              <a href="/" class="navbar-link" v-show="isLogin">我的账户</a>
-              <span class="navbar-link"  v-text="nickName"></span>
+              <div v-show="isLogin" class="father">
+              <a href="/#/custer" class="navbar-link">我的账户</a>
+              <ul id='setting'>
+                <li><a>个人资料</a></li>
+                <li><a>购物记录</a></li>
+                <li><a>我的卡券包</a></li>
+                <li><a>设置</a></li>
+              </ul>
+              </div>
+              <span class="navbar-link" v-show="isLogin"  v-text="nickName"></span>
               <a href="javascript:void(0)" class="navbar-link"  @click="showModel()" v-show="!isLogin">登录</a>
               <a href="javascript:void(0)" class="navbar-link" v-show="isLogin" @click="logout">退出</a>
               <div class="navbar-cart-container" v-show="isLogin" >
@@ -25,6 +33,7 @@
                   </svg>
                 </a> 
               </div>
+              <a href="/#/saler" class="navbar-link" >我是商家</a>
             </div>
           </div>
         </div>
@@ -40,6 +49,7 @@
         data(){
             return{
               mdShow:false,
+              isSetting:false
             }
         },
         components:{
@@ -59,7 +69,7 @@ return this.$store.state.isLogin;
         mounted(){
 this.checkLogin();
 this.getCartCount();
-document.getElementById('model_adymic').style.display='none';
+//  document.getElementById('model_adymic').style.display='none';
         },
         methods:{
           getCartCount(){
@@ -85,10 +95,36 @@ axios.post('/users/checklogin').then((res)=>{
 
           logout(){
 axios.post('/users/logout').then((res)=>{
- if(res.data.status==0){  this.$store.commit('updateIsLogin',false);;alert(res.data.msg)};
+ if(res.data.status==0){  
+   this.$store.commit('updateIsLogin',false);
+   alert(res.data.msg)
+   window.location.href='/#/';
+   };
 })
           },
 
         }
     }
 </script>
+<style>
+.father:hover #setting{
+visibility: visible;
+}
+#setting{
+ position: absolute;
+ visibility: hidden;
+ height: 185px;
+ width: 100px;
+ background:rgba(248, 245, 245,0.5);
+ border-radius:  8px;
+}
+#setting li{
+  padding: 14px 0;
+
+}
+#setting li:hover{
+  color: peru;
+  border-left:solid 2px orangered;
+  font-weight: bold
+}
+</style>

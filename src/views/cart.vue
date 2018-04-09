@@ -166,6 +166,12 @@ if(res.data.status==1){
 }else{
  this.getCartList();
   document.getElementById('model_adymic').style.display='none';
+  this.singleTotal=[];
+  this.isAllChoose=false;
+  this.accountantProduct=[];
+  this.check=false;
+  this.totalPrice=0;
+  this.$store.commit('updateCartCount',this.cartCount-1);
 }
 })
   },
@@ -185,36 +191,12 @@ a.push(this.cartList[index]);
                     this.$store.commit('updateToBackendCheckList',this.accountantProduct)
                     window.location="/#/address";
                   }
-// axios.post('users/accountant',{
-// accountantProduct:this.accountantProduct,
-// totalPrice:this.totalPrice
-// }).then((res)=>{
-//   console.log(res);
-// if(res.data.status==0){
-//      this.message="结算成功！是否立即查看订单？";
-//      this.singleTotal=[];
-//      this.totalPrice=0;
-//      this.getCartList();
-//     document.getElementById("model-wrap").style.display="inline";
-//     document.getElementById('sureDel').onclick=()=>{
-//  window.location='/#/orderList';
 
-//     }
-// }else{
-//    this.getCartList();
-//    this.message=res.data.msg;
-//     document.getElementById("model-wrap").style.display="inline";
-//     document.getElementById('sureDel').onclick=()=>{
-//   document.getElementById("model-wrap").style.display="none";
-//     }
-// }
-// })
 
    },
   delectgood(goodId){
     this.goodId=goodId;
       document.getElementById('model_adymic').style.display='inline';
-
   },
 getCartList(){
   axios.post('users/cart').then((res)=>{
@@ -288,10 +270,14 @@ this.accountantProduct.push(singleData);
 },
 mounted(){
   this.getCartList();
+  document.getElementById('model_adymic').style.display='none';
 },
 computed: {
   toBackEndCheckList(){
     return this.$store.state.toBackEndCheckList;
+  },
+  cartCount(){
+    return this.$store.state.cartCount;
   }
 },
   components: {

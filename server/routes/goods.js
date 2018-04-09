@@ -13,13 +13,13 @@ mongoose.connection.on("disconnected", () => {
   console.log('Mongo is disconnected')
 });
 router.get("/list", (req, res, next) => {
-  let serchText=req.param('serchText');
+  let serchText = req.param('serchText');
   let priceLevel = req.param("priceLevel");
   let pageSize = parseInt(req.param("pageSize"));
   let page = parseInt(req.param("page"));
   let sort = req.param('sort');
   let skip = (page - 1) * pageSize;
-  let isDeafault=req.param('isDeafault');
+  let isDeafault = req.param('isDeafault');
   let min = 0,
     max = 0;
   let params = {
@@ -68,8 +68,8 @@ router.get("/list", (req, res, next) => {
     }
   };
   let goodsModel = Goods.find(params).skip(skip).limit(pageSize);
- 
-  if(isDeafault==1){
+
+  if (isDeafault == 1) {
     goodsModel.sort({
       'salePrice': sort
     });
@@ -117,24 +117,33 @@ router.post('/addCart', (req, res, next) => {
               msg: err.message,
             })
           } else {
+            let number;
             if (data2) {
-    var num;
-              userdata.cartList.forEach((element,index) => {
-                if(element.productId==data2.productId){
-          num=element.productNum+1;
-          userdata.cartList.splice(index,1);
-          return;
-                }else{
-                  num=1;
+              if (userdata.cartList.length == 0) {
+                var newdata = {
+                  productId: data2.productId,
+                  productName: data2.productName,
+                  salePrice: data2.salePrice,
+                  productImage: data2.productImage,
+                  productNum: 1,
                 }
-              });
-              var newdata = {
-                productId: data2.productId,
-                productName: data2.productName,
-                salePrice: data2.salePrice,
-                productImage: data2.productImage,
-                productNum:num,
-           }
+              } else if (userdata.cartList.length !== 0) {
+                userdata.cartList.forEach((element, index) => {
+                  if (element.productId == data2.productId) {
+                    number = element.productNum + 1;
+                    userdata.cartList.splice(index, 1);
+                  } else {
+                    number = 1;
+                  }
+                });
+                var newdata = {
+                  productId: data2.productId,
+                  productName: data2.productName,
+                  salePrice: data2.salePrice,
+                  productImage: data2.productImage,
+                  productNum: number,
+                }
+              }
               userdata.cartList.push(newdata);
               userdata.save((err, data) => {
                 if (err) {
@@ -145,8 +154,8 @@ router.post('/addCart', (req, res, next) => {
                 } else {
                   res.json({
                     status: 0,
-                    cartCount:userdata.cartList.length,
-                    msg:'Success!'
+                    cartCount: userdata.cartList.length,
+                    msg: 'Success!'
                   })
                 }
               });
