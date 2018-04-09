@@ -20,7 +20,7 @@
                 <li><a>购物记录</a></li>
                 <li><a>我的卡券包</a></li>
                 <li><a>设置</a></li>
-              </ul>
+              </ul> 
               </div>
               <span class="navbar-link" v-show="isLogin"  v-text="nickName"></span>
               <a href="javascript:void(0)" class="navbar-link"  @click="showModel()" v-show="!isLogin">登录</a>
