@@ -35,7 +35,7 @@ node server/bin/www
 # saler 卖家优惠，购物券。。。
 ```
 
-
+## 组件
 ``` bash
 组件：Model（全局模态框）  NavHeader（顶部） NavFooter（底部）
 Success（结算成功） ShoppingHistory（购物历史） LocSolt（浏览位置插槽）
