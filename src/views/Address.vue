@@ -295,8 +295,7 @@ if(res.data.status==0){
   },
   changeStatus(num){
     if(this.$store.state.checkList.length==0||this.$store.state.toBackEndCheckList.length==0){
-      alert('请先选择要结算的商品！！！');
-      window.location.href='/#/cart';
+      alert('商品已结算完成，无法返回，请选择商品后重试！');
       return;
     }
 if(num==1){

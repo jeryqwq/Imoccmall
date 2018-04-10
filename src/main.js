@@ -14,6 +14,7 @@ Vue.use(infiniteScroll);
 });
 const store = new Vuex.Store({
   state: {
+    userStates:1,
     cartCount: 0,
     nickName:'',
     checkList:[],
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
     isLogin:false
   },
   mutations: {
+    updateUserStates:(state,userStates)=>{state.userStates=userStates},
     updateIsLogin:(state,isLogin)=>{state.isLogin=isLogin},
     updateTotalPrice:(state,totalPrice)=>{state.totalPrice=totalPrice},
     updateToBackendCheckList:(state,toBackEndCheckList)=>{state.toBackEndCheckList=toBackEndCheckList},

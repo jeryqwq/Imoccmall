@@ -2,7 +2,6 @@
 <div>
     <div class="rightpage">
     <div  class="msg_pop"><b>我的购物记录</b></div>
-   <div id="darkbannerwrap"></div>
   <div class="page-title-normal checkout-title">
       </div>
       <div class="item-list-wrap confirm-item-list-wrap">
@@ -37,7 +36,7 @@ overflow-y: scroll;">
                       <span class="select-ipt">x{{item.productNum}}</span>
                     </div>
                   </div>
-                  <div class="item-stock item-stock-no">Time</div>
+                  <div class="item-stock item-stock-no">{{item.timeOfBuy}}</div>
                 </div>
               </div>
               <div class="cart-tab-4">
@@ -65,9 +64,36 @@ cartList:[]
 this.getCartList();
   },
   methods: {
+    dateFormat(date, format){
+   date = new Date(date);  
+            var o = {  
+                'M+' : date.getMonth() + 1, //month  
+                'd+' : date.getDate(), //day  
+                'm+' : date.getMinutes(), //minute  
+                'H+' : date.getHours(),
+                's+' : date.getSeconds(), //second  
+                'q+' : Math.floor((date.getMonth() + 3) / 3), //quarter  
+                'S' : date.getMilliseconds() //millisecond  
+            };  
+            if (/(y+)/.test(format))  
+                format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));  
+   
+            for (var k in o)  
+                if (new RegExp('(' + k + ')').test(format))  
+                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length));  
+   
+            return format;  
+    },
       getCartList(){
           axios.get('/users/getHistory').then((res)=>{
-              this.cartList=res.data.result;
+              if(res.data.status==0){
+                for (const item of res.data.result) {
+                 item.timeOfBuy=this.dateFormat(item.timeOfBuy,'yyyy-MM-dd HH:mm:ss');
+                }
+                this.cartList=res.data.result;
+              }else{
+                alert(res.data.status.msg);
+              }
           })
       }
   }

@@ -2,7 +2,6 @@
   <div>
       <div class="rightpage">
   <div  class="msg_pop"><b>用户信息</b></div>
-   <div id="darkbannerwrap"></div>
    <table width="100%">
      <tr>
          <td>
@@ -26,7 +25,6 @@
 </template>
 <script>
 export default {
-  props: ['message'],
   data () {
       return {
           
@@ -46,12 +44,12 @@ export default {
    border-bottom: solid 2px #e0dddd !important;
 }
 .rightpage{
-width: 70%;
+width: 80%;
 /* position: absolute; */
-margin-left: 28%;
+margin-left: 17%;
 height: 600px
 }
- @media only screen and (min-width: 0px) and (max-width: 780px){
+ @media only screen and (min-width: 0px) and (max-width: 760px){
 .rightpage{
 width: 100%;
 position:relative;

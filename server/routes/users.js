@@ -191,14 +191,24 @@ router.post('/accountant', (req, res, next) => {
       data.cartList.forEach((item, index) => {
         accountantProduct.forEach((item1, index1) => {
           if (data.cartList[index].productId == accountantProduct[index1].productId) {
-            data.orderList.push(data.cartList[index]);
+           
+            var itemData={
+              productId:data.cartList[index].productId,
+              productName:data.cartList[index].productName,
+              salePrice:data.cartList[index].salePrice,
+              productImage:data.cartList[index].productImage,
+              productNum:accountantProduct[index1].count,
+              timeOfBuy:Date.now()
+            }
+           // console.log( data.cartList[index]);
+            data.orderList.push(itemData);
             myTotalPrice = myTotalPrice + data.cartList[index].salePrice * accountantProduct[index1].count;
             data.cartList.splice(index, 1);
           }
         });
       });
       //前端传递过来的结算数据与数据库进行对比无错后再进行付款，避免金额数量被修改
-      if (myTotalPrice == totalPrice) {
+      if (myTotalPrice === totalPrice) {
         //可在此处调用支付宝支付借口，完成支付后根据状态值前端再次选择渲染页面
         data.save((err, data) => {
           if (err) {

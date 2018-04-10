@@ -3,25 +3,29 @@
   <div>
       <nav-header></nav-header>
       <loc-solt location="我的账户"></loc-solt>
-        <user-info :message='states' v-show="states==1"></user-info>
-<shopping-history v-show="states==2"></shopping-history>
-<user-ticker v-show="states==3"></user-ticker>
-<setting v-show="states==4"></setting>
+        <user-info  v-show="userStates==1"></user-info>
+<shopping-history v-show="userStates==2"></shopping-history>
+<user-ticker v-show="userStates==3"></user-ticker>
+<address-manger v-show="userStates==4"></address-manger>
+
    <div class="filter stopPop pageleft"  ><!--  v-bind:class="{'filterby-show':filterBy}" -->
         <dl class="filter-price">
             <br/>
           <dt>我的账户:</dt>
           <dd>
-            <a href="javascript:void(0)" :class="{'cur':states==1}" @click="states=1">个人资料</a>
+            <a href="javascript:void(0)" :class="{'cur':userStates==1}" @click=" changeUerStates(1)">个人资料</a>
           </dd>
             <dd>
-            <a href="javascript:void(0)" :class="{'cur':states==2}" @click="states=2">购物记录</a>
+            <a href="javascript:void(0)" :class="{'cur':userStates==2}" @click=" changeUerStates(2)">购物记录</a>
           </dd>
             <dd>
-            <a href="javascript:void(0)" :class="{'cur':states==3}" @click="states=3">我的卡券包</a>
+            <a href="javascript:void(0)" :class="{'cur':userStates==3}" @click=" changeUerStates(3)">我的卡券包</a>
           </dd>
             <dd>
-            <a href="javascript:void(0)" :class="{'cur':states==4}" @click="states=4">基础设置</a>
+            <a href="javascript:void(0)" :class="{'cur':userStates==4}" @click=" changeUerStates(4)">地址管理</a>
+          </dd>
+            <dd>
+            <a href="javascript:void(0)" :class="{'cur':userStates==5}" @click=" changeUerStates(5)">设置</a>
           </dd>
         </dl>
 
@@ -36,16 +40,24 @@ import UserInfo from '@/components/UserInfo'
 import NavFooter from '@/components/Footer'
 import NavHeader from '@/components/Header'
 import ShoppingHistory from "@/components/ShoppingHistory"
-import Setting from '@/components/Setting'
+import AddressManger from '@/components/AddressManger'
 import LocSolt from '@/components/LocSolt'
 export default {
+
   data(){
       return{
-states:1
+
       }
   },
+  computed:{
+userStates(){
+  return this.$store.state.userStates;
+}
+},
   methods: {
-      
+      changeUerStates(index){
+        this.$store.commit('updateUserStates',index);
+      }
   },
   components:{
       NavFooter:NavFooter,
@@ -53,7 +65,7 @@ states:1
       UserInfo:UserInfo,
       ShoppingHistory:ShoppingHistory,
       UserTicker:UserTicker,
-      Setting:Setting,
+      AddressManger:AddressManger,
       LocSolt:LocSolt
   }
 }
@@ -61,10 +73,13 @@ states:1
 
 <style>
 .pageleft{
-width:25%;
+width:15%;
 height: 600px;
 position: fixed;
 top: 250px;
 
+}
+.msg_pop{
+  margin: 0 !important;
 }
 </style>

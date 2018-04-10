@@ -16,11 +16,12 @@
               <div v-show="isLogin" class="father">
               <a href="/#/user" class="navbar-link">我的账户</a>
               <ul id='setting'>
-                <li><a>个人资料</a></li>
-                <li><a>购物记录</a></li>
-                <li><a>我的卡券包</a></li>
-                <li><a>设置</a></li>
-              </ul> 
+                <li><a href="/#/user" @click="changeUerStates(1)">个人资料</a></li>
+                <li><a href="/#/user" @click="changeUerStates(2)">购物记录</a></li>
+                <li><a href="/#/user" @click="changeUerStates(3)">我的卡券包</a></li>
+                <li><a href="/#/user" @click="changeUerStates(4)">地址管理</a></li>
+                <li><a href="/#/user" @click="changeUerStates(5)">设置</a></li>
+              </ul>
               </div>
               <span class="navbar-link" v-show="isLogin"  v-text="nickName"></span>
               <a href="javascript:void(0)" class="navbar-link"  @click="showModel()" v-show="!isLogin">登录</a>
@@ -72,6 +73,9 @@ this.getCartCount();
 //  document.getElementById('model_adymic').style.display='none';
         },
         methods:{
+                changeUerStates(index){
+        this.$store.commit('updateUserStates',index);
+      },
           getCartCount(){
 axios.get('users/getCartCount').then((res)=>{
 if(res.data.status==0){
