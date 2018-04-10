@@ -6,7 +6,7 @@
                 <div id="darkbannerwrap"></div>
                 <p class="tip" v-text="errTip" style="color:red" ></p>
   </div>
-                          <div slot="btnGroup" @keyup.enter="">
+  <div slot="btnGroup" @keyup.enter="addAddress()">
 <input class="txt_form" placeholder="请输入收货人姓名" v-model="userName" type="text">
        <input class="txt_form" placeholder="请输入收货人地址" v-model="streetName" type="text">
         <input class="txt_form" placeholder="请输入收货人电话" v-model="tel" type="number">
@@ -17,14 +17,7 @@
 
   </model>
   <nav-header></nav-header>
-    <div class="nav-breadcrumb-wrap">
-  <div class="container">
-    <nav class="nav-breadcrumb">
-      <a href="/">Home</a>
-      <span>Address</span>
-    </nav>
-  </div>
-</div>
+<loc-solt :location="location"></loc-solt>
 <div class="checkout-page">
   <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
@@ -73,9 +66,6 @@
           <li :class="{'cur':checkStatas>=4}"><span>订单</span>确认</li>
         </ul>
       </div>
-
-
-
     <order-success v-show="checkStatas==4"></order-success>
 <!-- Cartlist-->
 <pay-money v-show="checkStatas==3"></pay-money>
@@ -160,6 +150,7 @@
 </div>
 </template>
 <script>
+import LocSolt from "@/components/LocSolt"
 import NavFooter from '@/components/Footer'
 import NavHeader from '@/components/Header'
 import axios from 'axios'
@@ -179,7 +170,7 @@ export default {
         streetName:'',
         postNum:'',
         tel:'',
-
+location:'订单确认'
       }
   },
   components:{
@@ -188,10 +179,13 @@ export default {
       Model:Model,
       PayList:PayList,
       OrderSuccess:OrderSuccess,
-      PayMoney:PayMoney
+      PayMoney:PayMoney,
+      LocSolt:LocSolt
   },
   mounted(){
     this.getAddress();
+           document.getElementById('model_adymic').style.display='none';
+
 // this.cartList=this.checkList;
   },
 computed: {
@@ -216,7 +210,9 @@ totalPrice:this.totalPrice
 }).then((res)=>{
   console.log(res);
 if(res.data.status==0){
- console.log('结算成功')
+ console.log('结算成功');
+ this.$store.commit('updateToBackendCheckList',[]);
+ this.$store.commit('updateCheckList',[]);
 }else{
   this.checkStatas=3;
   alert(res.data.msg);
@@ -261,6 +257,9 @@ res.data.result.forEach((element,index) => {
 })
   },
   addAddress(){
+    if(!this.streetName||!this.userName||!this.tel||!this.postNum){
+      return;
+    }
 axios.post('/users/addAddress',{
   streetName:this.streetName,
   userName:this.userName,
@@ -295,6 +294,11 @@ if(res.data.status==0){
     })
   },
   changeStatus(num){
+    if(this.$store.state.checkList.length==0||this.$store.state.toBackEndCheckList.length==0){
+      alert('请先选择要结算的商品！！！');
+      window.location.href='/#/cart';
+      return;
+    }
 if(num==1){
     if(this.checkStatas>=4){
       return;
@@ -307,7 +311,6 @@ setTimeout(() => {
 }, 1000);
    }
   }else{
-    
     if(this.checkStatas<=1){
       return;
     }

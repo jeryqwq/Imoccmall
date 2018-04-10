@@ -2,274 +2,302 @@ var express = require('express');
 var router = express.Router();
 var user = require('./../models/user');
 var cookie = require('cookie-parser');
-var crypto=require('crypto');
+var crypto = require('crypto');
 //var md5 = crypto.createHash('md5');
 /* GET users listing. */
 
 
 
-router.get('/getCartCount',(req,res,next)=>{
-  let userId=req.cookies.userId;
+router.get('/getHistory', (req, res, next) => {
+  let userId = req.cookies.userId;
   user.findOne({
-    userId:userId
-  },(err,data)=>{
-if(err){
-  res.json({
-    status:1,
-    msg:err.message
-  })
-}else{
-  res.json({
-      status:0,
-      result:data.cartList.length
-  })
-}
-  })
-})
-
-router.post('/setDefaultAddress',(req,res,next)=>{
-let index=req.body.index;
-let userId=req.cookies.userId;
-user.findOne({
-  userId:userId
-},(err,data)=>{
-  if(err){
-    res.json({
-      status:1,
-      msg:err.message
-    })
-  }else{
-    data.addressList.forEach((element,i) => {
-      if(index==i){
-        element.isDefault=true;
-      }else{
-        element.isDefault=false;
-      }
-    });
-    data.save((err,data)=>{
-      if(err){
-        res.json({
-          status:1,
-          msg:err.message
-        })
-      }else{
-        res.json({
-          status:0,
-          msg:'success!'
-        })
-      }
-    })
-  }
-})
-})
-
-router.post('/delAddress',(req,res,next)=>{
-let userId=req.cookies.userId;
-let _id=req.body._id;
-user.update({
-  userId:userId
-},{
-  $pull:{
-    'addressList':{
-      '_id':_id
-    }
-  }
-},(err,data)=>{
-    if(err){
+    userId: userId
+  }, (err, data) => {
+    if (err) {
       res.json({
-        status:1,
-        msg:err.message
+        status: 1,
+        msg: err.message
       })
-    }else{
-res.json({
-  status:0,
-  msg:'success!'
-})
- }
-})
+    } else {
+      res.json({
+        status: 0,
+        msg: 'success!',
+        result: data.orderList
+      })
+    }
+  })
+
+
+
 })
 
-router.post('/addAddress',(req,res,next)=>{
-  let streetName=req.body.streetName;
-  let userName=req.body.userName;
-  let tel=req.body.tel;
-  let postNum=req.body.postNum;
-  let userId=req.cookies.userId;
- let isDefault=req.body.isDefault;
+
+router.get('/getCartCount', (req, res, next) => {
+  let userId = req.cookies.userId;
   user.findOne({
-userId:userId
-  },(err,data)=>{
-if(err){
-  res.json({
-status:1,
-msg:err.message
+    userId: userId
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        status: 1,
+        msg: err.message
+      })
+    } else {
+      res.json({
+        status: 0,
+        result: data.cartList.length
+      })
+    }
   })
-}else{
-data.addressList.push({
-  streetName:streetName,
-  userName:userName,
-  tel:tel,
-  postNum:postNum,
-  isDefault:isDefault
-})
-data.save((err,data)=>{
-  if(err){
-    res.json({
-    status:1,
-    msg:err.message})
-  }else{
-    res.json({
-      status:0,
-      msg:'success'
-    })
-  }
-})
-}
-  })
-
-})
-router.post('/getAddressList',(req,res,next)=>{
-  let userId=req.cookies.userId;
-user.findOne({
-'userId':userId
-},(err,data)=>{
-if(err){
-  res.json({
-    'status':1,
-    'msg':err.message
-  })
-}else{
-res.json({
-  'status':0,
-  'result':data.addressList,
-  'msg':"success!"
-})
-}
-})
 })
 
-
-router.post('/accountant',(req,res,next)=>{
-  let userId=req.cookies.userId;
-let accountantProduct=req.body.accountantProduct;
-let totalPrice=req.body.totalPrice;
-let myTotalPrice=0;
-user.findOne({
-  "userId":userId
-},(err,data)=>{
-  if(err){
-    res.json({
-      status:1,
-      msg:err.message
-    })
-  }else{
-    data.cartList.forEach((item,index) => {
-      accountantProduct.forEach((item1,index1) => {
-     if(data.cartList[index].productId==accountantProduct[index1].productId){
-       data.orderList.push(data.cartList[index]);
-      myTotalPrice=myTotalPrice+ data.cartList[index].salePrice*accountantProduct[index1].count;
-       data.cartList.splice(index,1);
-     }
-    });
+router.post('/setDefaultAddress', (req, res, next) => {
+  let index = req.body.index;
+  let userId = req.cookies.userId;
+  user.findOne({
+    userId: userId
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        status: 1,
+        msg: err.message
+      })
+    } else {
+      data.addressList.forEach((element, i) => {
+        if (index == i) {
+          element.isDefault = true;
+        } else {
+          element.isDefault = false;
+        }
       });
-      //前端传递过来的结算数据与数据库进行对比无错后再进行付款，避免金额数量被修改
-      if(myTotalPrice==totalPrice){
-        //可在此处调用支付宝支付借口，完成支付后根据状态值前端再次选择渲染页面
-        data.save((err,data)=>{
-          if(err){
-            console.log(err.message);
-            res.json({
-              status:1,
-              msg:err.message
-            })
-          }else{
-console.log('用户信息更新成功！！！');
+      data.save((err, data) => {
+        if (err) {
+          res.json({
+            status: 1,
+            msg: err.message
+          })
+        } else {
+          res.json({
+            status: 0,
+            msg: 'success!'
+          })
+        }
+      })
+    }
+  })
+})
+
+router.post('/delAddress', (req, res, next) => {
+  let userId = req.cookies.userId;
+  let _id = req.body._id;
+  user.update({
+    userId: userId
+  }, {
+    $pull: {
+      'addressList': {
+        '_id': _id
+      }
+    }
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        status: 1,
+        msg: err.message
+      })
+    } else {
+      res.json({
+        status: 0,
+        msg: 'success!'
+      })
+    }
+  })
+})
+
+router.post('/addAddress', (req, res, next) => {
+  let streetName = req.body.streetName;
+  let userName = req.body.userName;
+  let tel = req.body.tel;
+  let postNum = req.body.postNum;
+  let userId = req.cookies.userId;
+  let isDefault = req.body.isDefault;
+  user.findOne({
+    userId: userId
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        status: 1,
+        msg: err.message
+      })
+    } else {
+      data.addressList.push({
+        streetName: streetName,
+        userName: userName,
+        tel: tel,
+        postNum: postNum,
+        isDefault: isDefault
+      })
+      data.save((err, data) => {
+        if (err) {
+          res.json({
+            status: 1,
+            msg: err.message
+          })
+        } else {
+          res.json({
+            status: 0,
+            msg: 'success'
+          })
+        }
+      })
+    }
+  })
+
+})
+router.post('/getAddressList', (req, res, next) => {
+  let userId = req.cookies.userId;
+  user.findOne({
+    'userId': userId
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        'status': 1,
+        'msg': err.message
+      })
+    } else {
+      res.json({
+        'status': 0,
+        'result': data.addressList,
+        'msg': "success!"
+      })
+    }
+  })
+})
+
+
+router.post('/accountant', (req, res, next) => {
+  let userId = req.cookies.userId;
+  let accountantProduct = req.body.accountantProduct;
+  let totalPrice = req.body.totalPrice;
+  let myTotalPrice = 0;
+  user.findOne({
+    "userId": userId
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        status: 1,
+        msg: err.message
+      })
+    } else {
+      data.cartList.forEach((item, index) => {
+        accountantProduct.forEach((item1, index1) => {
+          if (data.cartList[index].productId == accountantProduct[index1].productId) {
+            data.orderList.push(data.cartList[index]);
+            myTotalPrice = myTotalPrice + data.cartList[index].salePrice * accountantProduct[index1].count;
+            data.cartList.splice(index, 1);
           }
         });
-      res.json({
-        status:0,
-        msg:'success'
-      })
-    }else{
-      res.json({
-        status:1,
-        msg:'账面结算异常，请不要自行修改post的数据'
-      })
+      });
+      //前端传递过来的结算数据与数据库进行对比无错后再进行付款，避免金额数量被修改
+      if (myTotalPrice == totalPrice) {
+        //可在此处调用支付宝支付借口，完成支付后根据状态值前端再次选择渲染页面
+        data.save((err, data) => {
+          if (err) {
+            console.log(err.message);
+            res.json({
+              status: 1,
+              msg: err.message
+            })
+          } else {
+            console.log('用户信息更新成功！！！');
+          }
+        });
+        res.json({
+          status: 0,
+          msg: 'success'
+        })
+      } else {
+        res.json({
+          status: 1,
+          msg: '账面结算异常，请不要自行修改post的数据'
+        })
+      }
     }
-  }
-})
+  })
 
 })
-router.post('/delectgood',(req,res,next)=>{
-  let userId=req.cookies.userId;
-let _id=req.body._id;
-user.update({userId:userId},
-  {$pull:{'cartList':
-  {_id:_id
-  }
-}
-},(err,data)=>{
-if(err){
-res.json({
-  status:1,
-  msg:err.message
-})
-}else{
-  res.json({
-    status:0,
-    msg:'success'
+router.post('/delectgood', (req, res, next) => {
+  let userId = req.cookies.userId;
+  let _id = req.body._id;
+  user.update({
+    userId: userId
+  }, {
+    $pull: {
+      'cartList': {
+        _id: _id
+      }
+    }
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        status: 1,
+        msg: err.message
+      })
+    } else {
+      res.json({
+        status: 0,
+        msg: 'success'
+      })
+    }
   })
-}
 })
-})
-router.post('/checklogin',(req,res,next)=>{
-let userId=req.cookies.userId;
-  var publicKey=req.cookies.publicKey;
-  if(publicKey==''||userId==''){
-return;
+router.post('/checklogin', (req, res, next) => {
+  let userId = req.cookies.userId;
+  var publicKey = req.cookies.publicKey;
+  if (publicKey == '' || userId == '') {
+    return;
   };
   var d = require('crypto').createHash('md5').update(userId).digest('cj');
   // md5.update(userId);
   // var d = md5.digest('cj');
-if(d==publicKey){
-  res.json({
-    status:0,
-    msg:'success'
-  })
-}else{
-  res.cookie('userId','',{
-    path:'/',
-    maxAge:-1
-  });
-  res.cookie('publicKey','',{
-    path:'/',
-    maxAge:-1
-  });
-  res.json({
-    status:1,
-    msg:'用户信息检测失败'
-  })
+  if (d == publicKey) {
+    res.json({
+      status: 0,
+      msg: 'success'
+    })
+  } else {
+    res.cookie('userId', '', {
+      path: '/',
+      maxAge: -1
+    });
+    res.cookie('publicKey', '', {
+      path: '/',
+      maxAge: -1
+    });
+    res.json({
+      status: 1,
+      msg: '用户信息检测失败'
+    })
 
-}
+  }
 });
-router.post('/cart',(req,res,next)=>{
-  let userId=req.cookies.userId;
-user.findOne({
-  'userId':userId
-},(err,data)=>{
-if(err){
-  res.json({
-    status:1,
-    msg:err.message
+router.post('/cart', (req, res, next) => {
+  let userId = req.cookies.userId;
+  user.findOne({
+    'userId': userId
+  }, (err, data) => {
+    if (err) {
+      res.json({
+        status: 1,
+        msg: err.message
+      })
+    } else {
+      res.json({
+        status: 0,
+        result: data.cartList,
+        msg: 'Success!'
+      })
+    }
   })
-}else{
-  res.json({
-    status:0,
-    result:data.cartList,
-    msg:'Success!'
-  })
-}
-})
 });
 router.post('/login', (req, res, next) => {
   let userName = req.body.userName;
@@ -299,7 +327,8 @@ router.post('/login', (req, res, next) => {
         res.json({
           status: 0,
           msg: '登录成功',
-          nickName:userdata.nickName
+          nickName: userdata.nickName,
+          cartCount: userdata.cartList.length
         })
       } else {
         res.json({
@@ -311,18 +340,18 @@ router.post('/login', (req, res, next) => {
   })
 });
 
-router.post('/logout',(req,res,next)=>{
-res.cookie('userId','',{
-  path:'/',
-  maxAge:-1
-});
-res.cookie('publicKey','',{
-  path:'/',
-  maxAge:-1
-});
-res.json({
-  status:0,
-  msg:'退出成功！！！'
-})
+router.post('/logout', (req, res, next) => {
+  res.cookie('userId', '', {
+    path: '/',
+    maxAge: -1
+  });
+  res.cookie('publicKey', '', {
+    path: '/',
+    maxAge: -1
+  });
+  res.json({
+    status: 0,
+    msg: '退出成功！！！'
+  })
 })
 module.exports = router

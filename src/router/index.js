@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Goodlist from '@/views/Goodlist'
 import Cart from './../views/cart.vue'
 import Address from './../views/Address.vue'
-import Custer from "./../views/Custer.vue"
+import User from "./../views/User.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -24,9 +24,9 @@ export default new Router({
       component:Address,
     },
     {
-      path:'/custer',
-      name:'Custer',
-      component:Custer
+      path:'/User',
+      name:'User',
+      component:User
     }
   ]
 })

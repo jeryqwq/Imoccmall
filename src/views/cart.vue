@@ -14,14 +14,7 @@
  </div>
   <nav-header></nav-header>
   
-  <div class="nav-breadcrumb-wrap">
-  <div class="container">
-    <nav class="nav-breadcrumb">
-      <a href="/">Home</a>
-      <span>Cart</span>
-    </nav>
-  </div>
-</div>
+<loc-solt location="购物车"></loc-solt>
 <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1"
      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -135,6 +128,7 @@
 </div>
 </template>
 <script>
+import LocSolt from "@/components/LocSolt"
 import NavFooter from '@/components/Footer'
 import NavHeader from '@/components/Header'
 import axios from 'axios'
@@ -283,7 +277,8 @@ computed: {
   components: {
     Model:Model,
     NavFooter:NavFooter,
-NavHeader:NavHeader
+NavHeader:NavHeader,
+LocSolt:LocSolt
   }
 }
 </script>

@@ -13,14 +13,7 @@
               </div>
       </model>
 <nav-header></nav-header>
-<div class="nav-breadcrumb-wrap">
-  <div class="container">
-    <nav class="nav-breadcrumb">
-      <a href="/">Home</a>
-      <span>Goods</span>
-    </nav>
-  </div>
-</div>
+<loc-solt location="商品列表"></loc-solt>
 <div class="accessory-result-page accessory-page">
   <div class="container">
     <div class="filter-nav"> 
@@ -80,6 +73,7 @@ background: rgba(0, 0,0, 0.1)
 </style>
 
 <script>
+import LocSolt from '@/components/LocSolt';
 import "./../assets/css/base.css";
 import "./../assets/css/product.css";
 import "./../assets/css/checkout.css";
@@ -142,7 +136,8 @@ export default {
   components: {
     NavHeader: NavHeader,
     NavFooter: NavFooter,
-    Model:Model
+    Model:Model,
+    LocSolt:LocSolt
   },
   mounted: function() {
       document.getElementById('model_adymic').style.display='none';
@@ -169,8 +164,10 @@ userPwd:this.userPwd
             }).then((res)=>{
 if(res.data.status==0){
   this.errTip=res.data.msg;
+  
      this.$store.commit('updateUserInfo',res.data.nickName);
      this.$store.commit('updateIsLogin',true);
+     this.$store.commit('updateCartCount',res.data.cartCount);
 setTimeout(()=>{
   document.getElementById('model_adymic').style.display='none';
 },800);

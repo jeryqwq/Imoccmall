@@ -9,12 +9,12 @@
         <div class="navbar">
           <div class="navbar-left-container">
             <a href="http://chenjieweb.top/enter">
-              <img class="navbar-brand-logo" src="static/img/logo1.png" width="500px" ></a>
+              <img class="navbar-brand-logo" src="static/img/logo1.png" width="400px" height="150px" ></a>
           </div>
           <div class="navbar-right-container" style="display: flex;">
             <div class="navbar-menu-container">
               <div v-show="isLogin" class="father">
-              <a href="/#/custer" class="navbar-link">我的账户</a>
+              <a href="/#/user" class="navbar-link">我的账户</a>
               <ul id='setting'>
                 <li><a>个人资料</a></li>
                 <li><a>购物记录</a></li>
@@ -81,7 +81,6 @@ if(res.data.status==0){
           },
           showModel(){
   document.getElementById('model_adymic').style.display='inline';
-  console.log(1)
           },
 checkLogin(){
 axios.post('/users/checklogin').then((res)=>{
@@ -108,6 +107,7 @@ axios.post('/users/logout').then((res)=>{
 </script>
 <style>
 .father:hover #setting{
+  z-index: 12;
 visibility: visible;
 }
 #setting{
