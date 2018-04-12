@@ -4,7 +4,7 @@
 
 
 
-仿慕课网全栈商城，node+Mongo+vue前后端分离
+仿慕课网全栈商城，node+Mongo+vue+vuex前后端分离
 
 ## FrontEnd Build Setup
 
@@ -12,7 +12,7 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8989
 npm run dev
 
 # build for production with minification
@@ -32,7 +32,7 @@ node server/bin/www
 ``` bash
 # goods 商品（价格，日期，ID，图片地址。。。）
 # users 用户信息（地址，购物车，购物记录。。。）
-# saler 卖家优惠，购物券。。。
+# saler （卖家优惠，购物券。。。）
 ```
 
 ## 组件
