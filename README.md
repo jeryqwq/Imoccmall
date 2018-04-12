@@ -4,7 +4,7 @@
 
 
 
-仿慕课网全栈商城，node+Mongo+vue+vuex前后端分离
+高仿慕课网全栈商城，node+Mongo+vue+vuex前后端分离
 
 ## FrontEnd Build Setup
 
@@ -37,10 +37,10 @@ node server/bin/www
 
 ## 组件
 ``` bash
-组件：Model（全局模态框）  NavHeader（顶部） NavFooter（底部）
+子组件：Model（全局模态框）  NavHeader（顶部） NavFooter（底部）
 Success（结算成功） ShoppingHistory（购物历史） LocSolt（浏览位置插槽）
 UserTicker（用户优惠券） 
-Views（主要页面）：
+Views（父组件）：
 （address）地址选择   cart（购物车） Goodlist（商品列表）  user（用户信息）
 ```
 
