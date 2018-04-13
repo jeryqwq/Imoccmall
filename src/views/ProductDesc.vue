@@ -21,7 +21,7 @@
 <h5 style="color:#808080">春夏兰花甜美帅气 外套不贵，见长辈，学习，敲代码首选</h5>
 <div class="container-productInfo">
   <div style="float:left">
-  <span style="font-size:10px;color:#808080">  <img src="./../../static/logo/5acf3beae1168a16f73594fa.png" width="80px" height='15px'/>海量新品，尽在潮搭</span>
+  <span style="font-size:10px;color:#808080">  <img src="./../../static/logo/5acf3beae1168a16f73594fa.png" width="80px" height='15px'/>海量新品，尽在潮搭,玩趣互动</span>
   </div>
 <div>
   <table style="color:#6C6C6C;margin: 0 auto; text-align:center;">
@@ -48,9 +48,9 @@
 <br/>
 <ul class="imgul" style="display:inline-block;">
    <p style="float:left;margin-top:10px">颜色:&nbsp;&nbsp;&nbsp;&nbsp;</p>
-  <li  @click="colorState=1;changImgUrl('14.jpg')" ><a><img :class="{'cur':colorState==1}" src="./../../static/img/14.jpg" width="15%"/></a></li>
-  <li @click="colorState=2;changImgUrl('15.jpg')" ><a ><img :class="{'cur':colorState==2}" src="./../../static/img/15.jpg" width="15%"/></a></li>
-  <li  @click="colorState=3;changImgUrl('16.jpg')" ><a><img :class="{'cur':colorState==3}" src="./../../static/img/16.jpg" width="15%"/></a></li>
+  <li  @click="colorState=1;changImgUrl('22.jpg')" ><a><img :class="{'cur':colorState==1}" src="./../../static/img/22.jpg" width="15%"/></a></li>
+  <li @click="colorState=2;changImgUrl('22.jpg')" ><a ><img :class="{'cur':colorState==2}" src="./../../static/img/22.jpg" width="15%"/></a></li>
+  <li  @click="colorState=3;changImgUrl('22.jpg')" ><a><img :class="{'cur':colorState==3}" src="./../../static/img/22.jpg" width="15%"/></a></li>
 </ul>
 <br/>
 <br/>
@@ -118,7 +118,7 @@
 </div>
 <a>
 <h3 class="ticketinfo"><b >领券购买</b></h3>
-<h6>满800可用</h6>
+<h6><b>满800可用</b></h6>
 </a>
 </div>
 <div class="salerticker">
@@ -127,7 +127,7 @@
 </div>
 <a>
 <h3 class="ticketinfo"><b >领券购买</b></h3>
-<h6>满200可用</h6>
+<h6><b>满200可用</b></h6>
 </a>
 </div>
 <div class="salerticker">
@@ -136,14 +136,14 @@
 </div>
 <a>
 <h3 class="ticketinfo"><b >领券购买</b></h3>
-<h6>任意金额可用</h6>
+<h6><b>任意金额可用</b></h6>
 </a>
 </div>
 
 
 </div>
 </div>
-
+<sub-product-desc></sub-product-desc>
 <nav-footer></nav-footer>
   </div>
 </template>
@@ -152,13 +152,14 @@ import SalerInfo from '@/components/SalerInfo'
 import NavHeader from '@/components/Header'
 import NavFooter from '@/components/Footer'
 import LocSolt from '@/components/LocSolt'
+import SubProductDesc from '@/components/SubProductDesc'
 export default {
   data () {
       return {
         errmsg:'您填写的宝贝数量超过仓库拉！',
         isCanvas:false,
-          sizeState:1,
-          colorState:1,
+           sizeState:1,
+           colorState:1,
            reViewState:1,
            productNumBuy:1,
            imgUrl:'21.jpg',
@@ -200,11 +201,15 @@ smallcanvas.style.top=event.clientY-100+'px';
     NavFooter:NavFooter,
     NavHeader:NavHeader,
     SalerInfo:SalerInfo,
-    LocSolt:LocSolt
+    LocSolt:LocSolt,
+    SubProductDesc:SubProductDesc
   }
 }
 </script>
 <style>
+.salerticker h6{
+color: white;
+}
 .ticketinfo{
   color:white;
   padding-top:4px
@@ -358,7 +363,7 @@ width: 37%;
   float: left;
   width: 40%;
   text-align: left;
-  line-height: 30px;
+  line-height: 25px;
   margin-left: 3%
 }
 .container-right{
