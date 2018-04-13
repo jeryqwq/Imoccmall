@@ -4,7 +4,7 @@
 
 
 
-高仿慕课全栈商城，node+Mongo+vue+vuex前后端分离,新增用户板块，商品详情（防淘宝网商品页面），购物券
+高仿慕课全栈商城，node+Mongo+vue+vuex前后端分离,新增用户板块，商品详情（仿淘宝网商品页面），购物券
 
 ## FrontEnd Build Setup
 
