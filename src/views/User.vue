@@ -1,6 +1,7 @@
 <template>
 
   <div>
+
       <nav-header></nav-header>
       <loc-solt location="我的账户"></loc-solt>
         <user-info  v-show="userStates==1"></user-info>
@@ -46,7 +47,6 @@ export default {
 
   data(){
       return{
-
       }
   },
   computed:{
@@ -66,20 +66,8 @@ userStates(){
       ShoppingHistory:ShoppingHistory,
       UserTicker:UserTicker,
       AddressManger:AddressManger,
-      LocSolt:LocSolt
+      LocSolt:LocSolt,
   }
 }
 </script>
 
-<style>
-.pageleft{
-width:15%;
-height: 600px;
-position: fixed;
-top: 250px;
-
-}
-.msg_pop{
-  margin: 0 !important;
-}
-</style>

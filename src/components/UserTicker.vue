@@ -4,7 +4,7 @@
  <div  class="msg_pop"><b>我的卡卷包</b></div>
 
 
-    <div class="item-list-wrap confirm-item-list-wrap">
+    <div class="item-list-wrap confirm-item-list-wrap" >
         <div class="cart-item order-item">
           <div class="cart-item-head">
             <ul>
@@ -14,7 +14,7 @@
               <li>使用条件</li>
             </ul>
           </div>
-          <ul class="cart-item-list" style="height:600px;overflow-x: hidden;
+          <ul class="cart-item-list  scoll" style="height:600px;overflow-x: hidden;
 overflow-y: scroll;">
  <!-- <li v-for="(item,index) in tickerList"> -->
             <li >

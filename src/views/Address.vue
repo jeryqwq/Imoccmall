@@ -75,6 +75,7 @@
       <div class="page-title-normal checkout-title" >
         <h2><span>收货地址</span></h2>
       </div>
+      
       <div class="addr-list-wrap">
         <div class="addr-list">
           <ul>
@@ -116,6 +117,7 @@
           </a>
         </div>
       </div>
+
 </div>
       <!-- shipping method-->
       <div  v-show="checkStatas==1">

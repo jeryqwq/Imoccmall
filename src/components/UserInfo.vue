@@ -38,26 +38,7 @@ export default {
 }
 </script>
 <style>
-.text_info{
-    background: rgab(0,0,0,0) !important;
-   border-color: rgba(0,0,0,0)!important;
-   border-bottom: solid 2px #e0dddd !important;
-}
-.rightpage{
-width: 80%;
-/* position: absolute; */
-margin-left: 17%;
-height: 600px
-}
- @media only screen and (min-width: 0px) and (max-width: 760px){
-.rightpage{
-width: 100%;
-position:relative;
-display: block;
-margin-left: 0;
-}
 
 
- }
 </style>
 

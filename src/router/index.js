@@ -4,6 +4,7 @@ import Goodlist from '@/views/Goodlist'
 import Cart from './../views/cart.vue'
 import Address from './../views/Address.vue'
 import User from "./../views/User.vue"
+import Desc from './../views/ProductDesc.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -27,6 +28,11 @@ export default new Router({
       path:'/User',
       name:'User',
       component:User
+    },
+    {
+      path:'/desc',
+      name:'desc',
+      component:Desc
     }
   ]
 })

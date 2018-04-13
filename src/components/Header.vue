@@ -84,12 +84,16 @@ if(res.data.status==0){
 })
           },
           showModel(){
+             window.location.href='/#/';
+             setTimeout(()=>{
   document.getElementById('model_adymic').style.display='inline';
+             },500)
           },
 checkLogin(){
 axios.post('/users/checklogin').then((res)=>{
  if(res.data.status==1){
-   alert(res.data.msg+'解锁更多功能！！');
+   alert(res.data.msg);
+  //  window.location.href='/#/';
  }else{
    this.$store.commit('updateIsLogin',true);
  }

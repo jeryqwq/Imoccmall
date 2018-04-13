@@ -10,7 +10,8 @@ var userSchema=new mongoose.Schema({
     "salePrice":Number,
     "productImage":String,
     'productNum':Number,
-    'timeOfBuy':Date
+    'timeOfBuy':Date,
+    'ListId':String
 }],
 'cartList':[{
     "productId":String,
@@ -28,5 +29,6 @@ var userSchema=new mongoose.Schema({
     tel:String,
     isDefault:Boolean,
 }],
+'tickers':[]
 });
 module.exports=mongoose.model('User',userSchema,'users');

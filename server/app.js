@@ -28,7 +28,7 @@ if(req.cookies.userId){
   next();
 }
 else{
-   if(urlpath=='/users/login'||urlpath=='/users/logout'||urlpath=='/goods/list'){
+   if(urlpath=='/users/desc'||urlpath=='/users/login'||urlpath=='/users/logout'||urlpath=='/goods/list'){
     next();
   }else{
     res.json({

@@ -1,12 +1,65 @@
 <template>
   <div>
+    <model>
+   <div slot="message">
+                <div  class="msg_pop" v-text="addAddressStatue"></div>
+                <div id="darkbannerwrap"></div>
+                <p class="tip" v-text="errTip" style="color:red" ></p>
+  </div>
+  <div slot="btnGroup" @keyup.enter="addAddress()">
+<input class="txt_form" placeholder="请输入收货人姓名" v-model="userName" type="text">
+       <input class="txt_form" placeholder="请输入收货人地址" v-model="streetName" type="text">
+        <input class="txt_form" placeholder="请输入收货人电话" v-model="tel" type="number">
+   <input class="txt_form" placeholder="请输入邮编" v-model="postNum" type="number">
+   <input value="确定" class="login_submit" @click="addAddress()" style="width:100%;" type="button"  >
+              </div>
+      </model>
+     <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+      <symbol id="icon-add" viewBox="0 0 31 32">
+        <title>add</title>
+        <path class="path1" d="M30.745 15.152h-14.382v-14.596c0-0.308-0.243-0.557-0.543-0.557s-0.543 0.249-0.543 0.557v14.596h-14.665c-0.3 0-0.543 0.249-0.543 0.557s0.243 0.557 0.543 0.557h14.665v15.177c0 0.307 0.243 0.557 0.543 0.557s0.543-0.249 0.543-0.557v-15.177h14.382c0.3 0 0.543-0.249 0.543-0.557s-0.243-0.557-0.543-0.557z"></path>
+      </symbol>
+      <symbol id="icon-ok" viewBox="0 0 32 32">
+        <title>ok</title>
+        <path class="path1" d="M14.084 20.656l-7.845-9.282c-1.288-1.482-3.534-1.639-5.016-0.351s-1.639 3.534-0.351 5.016l10.697 12.306c1.451 1.669 4.057 1.623 5.448-0.096l18.168-22.456c1.235-1.527 0.999-3.765-0.528-5.001s-3.765-0.999-5.001 0.528l-15.573 19.337z"></path>
+      </symbol>
+      <symbol id="icon-edit" viewBox="0 0 32 32">
+        <title>edit</title>
+        <path class="path1" d="M28.287 8.51l-4.805-4.806 0.831-0.831c0.472-0.472 1.086-0.777 1.564-0.777 0.248 0 0.452 0.082 0.622 0.253l3.143 3.144c0.539 0.54 0.133 1.529-0.524 2.186l-0.831 0.831zM26.805 9.992l-1.138 1.138-4.805-4.806 1.138-1.138 4.805 4.806zM24.186 12.612l-14.758 14.762-4.805-4.806 14.758-14.762 4.805 4.806zM7.379 28.288l-4.892 1.224 1.223-4.894 3.669 3.67zM31.123 4.011l-3.143-3.144c-0.567-0.567-1.294-0.867-2.103-0.867-1.036 0-2.174 0.52-3.045 1.391l-20.429 20.436c-0.135 0.134-0.23 0.302-0.276 0.487l-2.095 8.385c-0.089 0.355 0.017 0.736 0.276 0.995 0.198 0.198 0.461 0.307 0.741 0.307 0.085 0 0.171-0.010 0.254-0.031l8.381-2.096c0.185-0.047 0.354-0.142 0.487-0.276l20.43-20.436c1.409-1.41 2.042-3.632 0.524-5.15v0z"></path>
+      </symbol>
+      <symbol id="icon-del" viewBox="0 0 32 32">
+        <title>delete</title>
+        <path class="path1" d="M11.355 4.129v-2.065h9.29v2.065h-9.29zM6.194 29.935v-23.742h19.613v23.742h-19.613zM30.968 4.129h-8.258v-3.097c0-0.569-0.463-1.032-1.032-1.032h-11.355c-0.569 0-1.032 0.463-1.032 1.032v3.097h-8.258c-0.569 0-1.032 0.463-1.032 1.032s0.463 1.032 1.032 1.032h3.097v24.774c0 0.569 0.463 1.032 1.032 1.032h21.677c0.569 0 1.032-0.463 1.032-1.032v-24.774h3.097c0.569 0 1.032-0.463 1.032-1.032s-0.463-1.032-1.032-1.032v0z"></path>
+        <path class="path2" d="M10.323 9.806c-0.569 0-1.032 0.463-1.032 1.032v14.452c0 0.569 0.463 1.032 1.032 1.032s1.032-0.463 1.032-1.032v-14.452c0-0.569-0.463-1.032-1.032-1.032z"></path>
+        <path class="path3" d="M16 9.806c-0.569 0-1.032 0.463-1.032 1.032v14.452c0 0.569 0.463 1.032 1.032 1.032s1.032-0.463 1.032-1.032v-14.452c0-0.569-0.463-1.032-1.032-1.032z"></path>
+        <path class="path4" d="M21.677 9.806c-0.569 0-1.032 0.463-1.032 1.032v14.452c0 0.569 0.463 1.032 1.032 1.032s1.032-0.463 1.032-1.032v-14.452c0-0.569-0.463-1.032-1.032-1.032z"></path>
+      </symbol>
+      <symbol id="icon-clock" viewBox="0 0 32 32">
+        <title>clock</title>
+        <path class="path1" d="M29.333 16c0-7.364-5.97-13.333-13.333-13.333s-13.333 5.97-13.333 13.333c0 7.364 5.97 13.333 13.333 13.333s13.333-5.97 13.333-13.333v0 0 0 0 0 0zM0 16c0-8.837 7.163-16 16-16s16 7.163 16 16c0 8.837-7.163 16-16 16s-16-7.163-16-16zM14.667 14.667v1.333h2.667v-10.667h-2.667v9.333zM24 18.667h1.333v-2.667h-10.667v2.667h9.333z"></path>
+      </symbol>
+      <symbol id="icon-question" viewBox="0 0 32 32">
+        <title>question</title>
+        <path class="path1" d="M16 2.56c7.411 0 13.44 6.029 13.44 13.44s-6.029 13.44-13.44 13.44c-7.411 0-13.44-6.029-13.44-13.44s6.029-13.44 13.44-13.44zM16 0c-8.822 0-16 7.178-16 16s7.178 16 16 16c8.822 0 16-7.178 16-16s-7.178-16-16-16z"></path>
+        <path class="path2" d="M16 22.080c-1.059 0-1.92 0.861-1.92 1.92s0.861 1.92 1.92 1.92c1.059 0 1.92-0.861 1.92-1.92s-0.861-1.92-1.92-1.92z"></path>
+        <path class="path3" d="M12.16 12.48c0.706 0 1.28-0.574 1.28-1.28 0-1.412 1.148-2.56 2.56-2.56s2.56 1.148 2.56 2.56c0 1.412-1.148 2.56-2.56 2.56-0.706 0-1.28 0.574-1.28 1.28v3.84c0 0.706 0.574 1.28 1.28 1.28s1.28-0.574 1.28-1.28v-2.723c2.224-0.575 3.84-2.616 3.84-4.957 0-2.823-2.297-5.12-5.12-5.12s-5.12 2.297-5.12 5.12c0 0.706 0.574 1.28 1.28 1.28z"></path>
+      </symbol>
+    </defs>
+  </svg>
+ 
 <div  class="rightpage">
  <div  class="msg_pop"><b>地址管理</b></div>
       <div class="addr-list-wrap">
-        
-        <div class="addr-list">
-          <ul>
+        <div class="addr-list  scoll" style="height:600px;overflow-x: hidden;
+overflow-y: scroll;" >
+          <ul >
             <li v-for="(item,index) in addressList"  v-bind:class="{'check':item.isDefault}" >
+                 <div class="addr-opration" @click="showModel(0,index)" style="width: 20px;height: 20px;"  >
+                <a href="javascript:;" class="addr-edit-btn">
+                  <svg class="icon icon-edit"><use xlink:href="#icon-edit"></use></svg>
+                </a>
+              </div>
               <dl>
                 <dt>{{item.userName}}</dt>
                 <dd class="address">{{item.streetName}}</dd>
@@ -17,6 +70,7 @@
                   <svg class="icon icon-del"><use xlink:href="#icon-del"></use></svg>
                 </a>
               </div>
+              
               <!-- <div class="addr-opration addr-set-default">
                 <a href="javascript:;" class="addr-set-default-btn"><i>设为默认</i></a>
               </div> -->
@@ -24,7 +78,7 @@
                <div class="addr-opration " v-show="!isDefault[index]" @click="setDefaultAddress(index)">设为默认</div>
             </li>
             <li class="addr-new" >
-              <div class="add-new-inner">
+              <div class="add-new-inner" @click="showModel(1,index=-1)">
                 <i class="icon-add">
                   <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
                 </i>
@@ -43,18 +97,48 @@
 </template>
 <script>
  import  axios from 'axios';
+import Model from '@/components/Model'
 export default {
   data () {
       return {
-          addressList:[],
-          limit:3,
-          isDefault:[]
+        errTip:'',
+        userName:'',
+        streetName:'',
+        postNum:'',
+        tel:'',
+        addressList:[],
+        limit:3,
+        isDefault:[],
+        addAddressStatue:'添加新地址',
+        _id:''
       }
   },
+components: {
+  Model:Model
+},
   mounted () {
     this.getAddress();
+          document.getElementById('model_adymic').style.display='none';
   },
   methods: {
+    setDefaultAddress(index){
+    axios.post('/users/setDefaultAddress',{
+      'index':index
+    }).then((res)=>{
+if(res.data.status==0){
+    this.getAddress();
+}
+    })
+  },
+      delAddress(addressId){
+axios.post('/users/delAddress',{
+  '_id':addressId
+}).then((res)=>{
+if(res.data.status==0){
+  this.getAddress();
+}
+})
+  },
         getAddress(){
 axios.post('/users/getAddressList').then((res)=>{
   if(res.data.status==0){
@@ -63,6 +147,44 @@ res.data.result.forEach((element,index) => {
   this.isDefault[index]=element.isDefault;//wrong!!
 });
   }
+})
+  },
+  showModel(state,index){
+       document.getElementById('model_adymic').style.display='inline';
+if(state===0){//edit
+this.addAddressStatue='编辑地址';
+this.userName=this.addressList[index].userName;
+this.streetName=this.addressList[index].streetName;
+this.postNum=this.addressList[index].postNum;
+this.tel=this.addressList[index].tel;
+this._id=this.addressList[index]._id;
+}else{
+this.userName='';
+this.streetName='';
+this.postNum='';
+this.tel='';
+this.addAddressStatue='添加新地址';
+this._id='';
+}
+  },
+    addAddress(){
+    if(!this.streetName||!this.userName||!this.tel||!this.postNum){
+      return;
+    }
+axios.post('/users/addAddress',{
+  streetName:this.streetName,
+  userName:this.userName,
+  tel:this.tel,
+  postNum:this.postNum,
+  isDefault:false,
+  _id:this._id
+}).then((res)=>{
+if(res.data.status==0){
+  this.getAddress();
+  setTimeout(()=>{
+       document.getElementById('model_adymic').style.display='none';
+  },500)
+}
 })
   },
   }

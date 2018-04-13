@@ -120,6 +120,7 @@ router.post('/addAddress', (req, res, next) => {
   let postNum = req.body.postNum;
   let userId = req.cookies.userId;
   let isDefault = req.body.isDefault;
+  let _id=req.body._id;
   user.findOne({
     userId: userId
   }, (err, data) => {
@@ -129,6 +130,16 @@ router.post('/addAddress', (req, res, next) => {
         msg: err.message
       })
     } else {
+      if(_id){
+        data.addressList.forEach(item => {
+    if(item._id==_id){
+      item.streetName=streetName;
+      item.userName=userName;
+      item.tel=tel;
+      item.postNum=postNum;
+  }
+});
+}else{
       data.addressList.push({
         streetName: streetName,
         userName: userName,
@@ -136,6 +147,7 @@ router.post('/addAddress', (req, res, next) => {
         postNum: postNum,
         isDefault: isDefault
       })
+    }
       data.save((err, data) => {
         if (err) {
           res.json({
@@ -191,7 +203,6 @@ router.post('/accountant', (req, res, next) => {
       data.cartList.forEach((item, index) => {
         accountantProduct.forEach((item1, index1) => {
           if (data.cartList[index].productId == accountantProduct[index1].productId) {
-           
             var itemData={
               productId:data.cartList[index].productId,
               productName:data.cartList[index].productName,
@@ -200,7 +211,6 @@ router.post('/accountant', (req, res, next) => {
               productNum:accountantProduct[index1].count,
               timeOfBuy:Date.now()
             }
-           // console.log( data.cartList[index]);
             data.orderList.push(itemData);
             myTotalPrice = myTotalPrice + data.cartList[index].salePrice * accountantProduct[index1].count;
             data.cartList.splice(index, 1);

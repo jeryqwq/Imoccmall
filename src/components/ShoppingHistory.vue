@@ -4,8 +4,9 @@
     <div  class="msg_pop"><b>我的购物记录</b></div>
   <div class="page-title-normal checkout-title">
       </div>
-      <div class="item-list-wrap confirm-item-list-wrap">
-        <div class="cart-item order-item">
+      <div class="item-list-wrap confirm-item-list-wrap scoll" style="height:600px;overflow-x: hidden;
+overflow-y: scroll;">
+        <div class="cart-item order-item " >
           <div class="cart-item-head">
             <ul>
               <li>商品信息</li>
@@ -14,8 +15,7 @@
               <li>总价</li>
             </ul>
           </div>
-          <ul class="cart-item-list" style="height:600px;overflow-x: hidden;
-overflow-y: scroll;">
+          <ul class="cart-item-list " >
             <li v-for="(item,index) in cartList">
               <div class="cart-tab-1">
                 <div class="cart-item-pic">
