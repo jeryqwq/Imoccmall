@@ -3,25 +3,27 @@
 <nav-header></nav-header>
 <saler-info></saler-info>
 <loc-solt location='商品详情'></loc-solt>
-<div class="context">
+<div class="context" @mouseover="isBigImg=false">
   <div class="img-left" >
-    <canvas id='smallcanvas'  v-show="isCanvas" >
-
-    </canvas>
-<img  v-lazy="'/static/img/'+imgUrl" width="100%" @mouseover="moveCanvas($event)"   @mouseenter="isCanvas=true"  @mouseout="isCanvas=false"/>
-<ul class="imgul" style="display:inline-block;">
+    <div style="position:absoult;">
+    <div id='smalldiv'  v-show="isCanvas" @mousemove="moveCanvas($event)" >
+    </div></div>
+<img id="modelimg" v-lazy="'/static/img/'+imgUrl" width="100%" />
+<ul class="imgul" style="display:inline-block;margin-top:30px">
   <li @mouseover="reViewState=1;changImgUrl('22.jpg')" ><a><img :class="{'cur':reViewState==1}" src="./../../static/img/22.jpg" width="20%"/></a></li>
   <li  @mouseover="reViewState=2;changImgUrl('11.jpg')" ><a><img :class="{'cur':reViewState==2}" src="./../../static/img/11.jpg" width="20%"/></a></li>
   <li  @mouseover="reViewState=3;changImgUrl('12.jpg')" ><a><img :class="{'cur':reViewState==3}" src="./../../static/img/12.jpg" width="20%"/></a></li>
   <li @mouseover="reViewState=4;changImgUrl('13.jpg')" ><a><img :class="{'cur':reViewState==4}" src="./../../static/img/13.jpg" width="20%"/></a></li>
 </ul>
 </div>
+<!--居中部分 -->
 <div class="container-center">
+  <div class="bigimg" v-show="isBigImg"><img id="bigimg" v-lazy="'/static/img/'+imgUrl"/></div>
 <h2><b>韩国东大门ulzzang早春新品 剪破毛边宽松纯棉印花长袖T恤tee男女</b></h2>
 <h5 style="color:#808080">春夏兰花甜美帅气 外套不贵，见长辈，学习，敲代码首选</h5>
 <div class="container-productInfo">
   <div style="float:left">
-  <span style="font-size:10px;color:#808080">  <img src="./../../static/logo/5acf3beae1168a16f73594fa.png" width="80px" height='15px'/>海量新品，尽在潮搭,玩趣互动</span>
+  <span style="font-size:10px;color:#808080"><img src="./../../static/logo/5acf3beae1168a16f73594fa.png" width="80px" height='15px'/>海量新品，尽在潮搭,玩趣互动</span>
   </div>
 <div>
   <table style="color:#6C6C6C;margin: 0 auto; text-align:center;">
@@ -48,9 +50,9 @@
 <br/>
 <ul class="imgul" style="display:inline-block;">
    <p style="float:left;margin-top:10px">颜色:&nbsp;&nbsp;&nbsp;&nbsp;</p>
-  <li  @click="colorState=1;changImgUrl('22.jpg')" ><a><img :class="{'cur':colorState==1}" src="./../../static/img/22.jpg" width="15%"/></a></li>
-  <li @click="colorState=2;changImgUrl('22.jpg')" ><a ><img :class="{'cur':colorState==2}" src="./../../static/img/22.jpg" width="15%"/></a></li>
-  <li  @click="colorState=3;changImgUrl('22.jpg')" ><a><img :class="{'cur':colorState==3}" src="./../../static/img/22.jpg" width="15%"/></a></li>
+  <li  @click="colorState=1;changImgUrl('22.jpg')" ><a><img :class="{'cur':colorState==1}" src="./../../static/img/22.jpg" width="10%"/></a></li>
+  <li @click="colorState=2;changImgUrl('22.jpg')" ><a ><img :class="{'cur':colorState==2}" src="./../../static/img/22.jpg" width="10%"/></a></li>
+  <li  @click="colorState=3;changImgUrl('22.jpg')" ><a><img :class="{'cur':colorState==3}" src="./../../static/img/22.jpg" width="10%"/></a></li>
 </ul>
 <br/>
 <br/>
@@ -65,10 +67,8 @@
 <br/>
 <br/>
 <ul  style="display:inline-block;width:100%">
- <div class="next-btn-wrap">
    <a class="btn btn--m btn--m " style="float: left;">现在购买</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a class="btn btn--m btn--red">加入购物车</a>
-   </div>
 </ul>
 <br/>
 <br/>
@@ -156,8 +156,9 @@ import SubProductDesc from '@/components/SubProductDesc'
 export default {
   data () {
       return {
+        isBigImg:false,
         errmsg:'您填写的宝贝数量超过仓库拉！',
-        isCanvas:false,
+        isCanvas:true,
            sizeState:1,
            colorState:1,
            reViewState:1,
@@ -168,17 +169,41 @@ export default {
       }
   },
   mounted () {
-this.drawCanvas(); 
 document.title=this.title;
   },
   methods: {
-    drawCanvas(){
- 
-} , 
     moveCanvas(event){
-var smallcanvas= document.getElementById('smallcanvas');
-  smallcanvas.style.left=event.clientX-100+'px';
-smallcanvas.style.top=event.clientY-100+'px';
+      this.isBigImg=true;
+   var sclTop= document.body.scrollTop;
+      // document.body.scrollTop = document.documentElement.scrollTop = 0;
+var smalldiv= document.getElementById('smalldiv');
+var modelimg=document.getElementById('modelimg');
+var bigimg=document.getElementById("bigimg");
+var maxwidth=modelimg.clientWidth;
+var maxheight=modelimg.clientHeight;
+var l=modelimg.offsetLeft;
+var t=modelimg.offsetTop;
+smalldiv.style.width=maxwidth/2+'px';
+smalldiv.style.height=maxheight/2+'px';
+  smalldiv.style.left=event.clientX-maxwidth/4+'px';
+smalldiv.style.top=event.clientY-maxheight/4+sclTop+'px';
+bigimg.style.left=-Number(smalldiv.style.left.replace(/\s+|px/gi,""))+l+"px";
+bigimg.style.top=-Number( smalldiv.style.top.replace(/\s+|px/gi,""))+t+'px';
+				if(Number(smalldiv.style.left.replace(/\s+|px/gi,""))<l){
+          smalldiv.style.left=l+"px";
+          bigimg.style.left=0+"px"
+				}
+				if(Number( smalldiv.style.top.replace(/\s+|px/gi,""))<t){
+            smalldiv.style.top=t+"px";
+            bigimg.style.top=0+"px";
+				}
+				if(Number( smalldiv.style.left.replace(/\s+|px/gi,""))>l+maxwidth-maxheight/2){
+					smalldiv.style.left=l+maxwidth-maxheight/2+'px';
+				}
+				if(Number( smalldiv.style.top.replace(/\s+|px/gi,""))> t+maxheight-maxwidth/2){
+					smalldiv.style.top=t+maxheight-maxwidth/2+"px";
+				}
+
     },
     changNum(index){
          if(index==1){
@@ -207,6 +232,18 @@ smallcanvas.style.top=event.clientY-100+'px';
 }
 </script>
 <style>
+.bigimg{
+width: 400px;
+height: 400px;
+overflow: hidden;
+position: absolute;
+}
+.bigimg img{
+position: absolute;
+left:0px;
+top: 0px;
+}
+
 .salerticker h6{
 color: white;
 }
@@ -296,13 +333,13 @@ background-position: left;
 .commitment :nth-child(3){
   background-image:url('./../assets/yunfeixian.png');
 }
-#smallcanvas{
-  width:200px;
-  height:200px;
-  position: fixed;
+#smalldiv{
+  position: absolute;
   background: rgba(0,0,0,0.5);
-  z-index: inherit;
+  width: 200px;
+  height: 200px;
 }
+
 #numText{
   width: 100%;
 height: 100%;
@@ -323,7 +360,7 @@ background: #c0c0c0;
 
 .imgul li img{
   float: left;
-
+margin-left: 5px
 }
 .imgul li img:hover{
    border-color: #ff4400;
