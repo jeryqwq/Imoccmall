@@ -9,11 +9,18 @@ var productSchema = new Schema({
   "productSalerNum" : Number,
   'productDesc': String,
   'productReview': [{
+    "productColor" : String,
+    "productSize" : String,
     "reviewName": String,
     "reviewText": String,
     "reviewTime": Date
   }],
-  'productSize': [],
+  'productSize': [
+    {
+    "value":String,
+    "price":String
+    }
+  ],
   'prodcutColor': [
     {
       "colorName" : String,
@@ -26,7 +33,8 @@ var productSchema = new Schema({
     "productBrand" : String,
     "productTypoNum" :String,
     "productPackingList" :String,
-    "productPlace" : String
+    "productPlace" : String,
+    "productInfo-1":String
 },
   'productSaler_id': String,
   'isSupportTicker': Boolean,
