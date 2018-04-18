@@ -6,6 +6,7 @@ var productSchema = new Schema({
   "salePrice": Number,
   "productImage": String,
   'productRemainNum': Number,
+  "productSalerNum" : Number,
   'productDesc': String,
   'productReview': [{
     "reviewName": String,
@@ -13,9 +14,21 @@ var productSchema = new Schema({
     "reviewTime": Date
   }],
   'productSize': [],
-  'prodcutColor': [],
+  'prodcutColor': [
+    {
+      "colorName" : String,
+      "productImg" : String,
+  }
+  ],
+  "productDetail" : {
+    "productSize" : String,
+    "productWeight" :String,
+    "productBrand" : String,
+    "productTypoNum" :String,
+    "productPackingList" :String,
+    "productPlace" : String
+},
   'productSaler_id': String,
   'isSupportTicker': Boolean,
-
 });
 module.exports = mongoose.model("Good", productSchema)

@@ -37,7 +37,7 @@
             <li :class="{'cur':curStatus==2}" @click="changCurStatus(2)">
               <a>累计评论
                 <span style="color:#ff8000;">
-                  <b>913</b>
+                  <b>{{reviews}}</b>
                 </span>
               </a>
             </li>
@@ -48,74 +48,38 @@
         </div>
         <div class="prodctudesc" v-show="curStatus==1">
           <ul>
-            <li>
-              <h5>适用场景:
-                <span>睡衣</span>
+            <li v-for="(item,index) in data.productDetail" v-bind:key="index">
+              <h5>
+                <span>{{item}}</span>
               </h5>
             </li>
-            <li>
-              <h5>适用场景:
-                <span>睡衣</span>
-              </h5>
-            </li>
-            <li>
-              <h5>适用场景:
-                <span>睡衣</span>
-              </h5>
-            </li>
-            <li>
-              <h5>适用场景:
-                <span>睡衣</span>
-              </h5>
-            </li>
-            <li>
-              <h5>适用场景:
-                <span>睡衣</span>
-              </h5>
-            </li>
+           
           </ul>
-          <img src="./../../static/img/22.jpg" />
-          <img src="./../../static/img/13.jpg" />
+          <img v-lazy="'/static/img/'+data.productImage" />
+          <img  v-lazy="'/static/salerimg/'+item.productImg" v-for="item in data.prodcutColor" />
         </div>
 
         <div class="productReview" v-show="curStatus==2">
           <ul>
-            <li>
+            <li v-for="item in data.productReview">
               <div>
                      <h5 class="reviewname">用户名:
-                      <span>赵云</span>
+                      <span>{{item.reviewName}}</span>
                     </h5>
-                <h5 style="float:right;width:70%;">睡衣很美，很美很美，我体重110身高168，平时穿m，睡衣想要宽点吗就拍了L，上衣有点大，裤子合适，要买的美眉们可以参考一下，睡衣很滑很凉爽.
+                <h5 style="float:right;width:70%;">{{item.reviewText}}  </h5>
                   <br/>
                   <br/>
                   <h6 class="timeinfo">
                
-                    <span style="float:right; color: #808080;">2018-02-30 12:50:43 &nbsp;&nbsp;&nbsp;颜色分类:
-                      <span>白色</span>尺寸
-                      <span>M</span>
+                    <span style="float:right; color: #808080;">{{data.reviewTime}} &nbsp;&nbsp;&nbsp;颜色/款式:
+                      <span>{{item.productColor}}&nbsp;&nbsp;</span>尺码/套餐:
+                      <span>{{item.productSize}}</span>
                     </span>
                   </h6>
-                </h5>
+              
               </div>
             </li>
-       <li>
-              <div>
-                     <h5 class="reviewname">用户名:
-                      <span>赵云</span>
-                    </h5>
-                <h5 style="float:right;width:70%;">睡衣很美，很美很美，我体重110身高168，平时穿m，睡衣想要宽点吗就拍了L，上衣有点大，裤子合适，要买的美眉们可以参考一下，睡衣很滑很凉爽.
-                  <br/>
-                  <br/>
-                  <h6 class="timeinfo">
-               
-                    <span style="float:right; color: #808080;">2018-02-30 12:50:43 &nbsp;&nbsp;&nbsp;颜色分类:
-                      <span>白色</span>尺寸
-                      <span>M</span>
-                    </span>
-                  </h6>
-                </h5>
-              </div>
-            </li>
+     
           </ul>
         </div>
 
@@ -133,6 +97,7 @@
 </template>
 <script>
   export default {
+    props:['data'],
     data() {
       return {
         curStatus: 1,
@@ -148,7 +113,12 @@
       },
     },
     mounted() {
-
+      
+    },
+    computed: {
+      reviews(){
+return this.data.productReview.length;
+      }
     }
   }
 
@@ -192,8 +162,10 @@ height: 60px;
     float: left;
   }
   .productReview ul li{
-    border-bottom: solid 1px #c0c0c0;
+    border-top: solid 1px #c0c0c0;
     padding-bottom: 20px;
+    width: 100%;
+    display: inline-block;
   }
   .productReview ul li div {
     width: 100%;

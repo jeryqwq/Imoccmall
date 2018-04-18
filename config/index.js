@@ -16,6 +16,9 @@ module.exports = {
 },
 '/users/*':{
   target:'http://127.0.0.1:3000/'
+},
+"/salers/*":{
+  target:'http://127.0.0.1:3000/'
 }
 
     },

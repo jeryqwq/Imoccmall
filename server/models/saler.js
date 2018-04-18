@@ -12,4 +12,4 @@ var salerSchema=new Schema({
 'shopHeadImg':String,
 'shopContect':String,
 });
-module.exports=mongoose.model("Saler",salerSchema)
+module.exports=mongoose.model("Saler",salerSchema,"salers")

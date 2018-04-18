@@ -27,13 +27,14 @@
            
       <div class="filter stopPop" id="filter" v-bind:class="{'filterby-show':filterBy}">
         <dl class="filter-price">
+             <input class="txt_form" v-model="serchText"  type="text" placeholder="Input Product Name Here" @keydown.enter=""  />
+          <input value="搜索" class="btn btn--red " @click="getGoodsList()" style="width:100%;margin-bottom:20px" type="button"    />
           <dt>Price:</dt>
           <dd><a href="javascript:void(0)" v-bind:class="{'cur':priceChecked=='all'}" @click="setPriceFilter('all');busy=false">All</a></dd>
           <dd v-for="(item,index) in priceFliter" v-bind:key="item.index" >
             <a href="javascript:void(0)" @click="setPriceFilter(index)" v-bind:class="{'cur':priceChecked==index}">{{priceFliter[index].startPrice}} - {{priceFliter[index].endPrice}}</a>
           </dd>
-     <input class="txt_form" v-model="serchText"  type="text" placeholder="Serch For" @keydown.enter=""  />
-          <input value="搜索" class="btn btn--m" @click="getGoodsList()" style="width:100%;" type="button"    />
+  
         </dl>
       </div>
       <!-- search result accessories list -->
@@ -42,7 +43,7 @@
           <ul>
              <li v-for="item in goodsList" v-bind:key="item.index">
               <div class="pic">
-                <a href="/#/desc"><img v-lazy="'/static/img/'+item.productImage" alt=""></a>
+                <a :href="'/#/productdesc?_id='+item._id"><img v-lazy="'/static/img/'+item.productImage" alt=""></a>
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
@@ -142,6 +143,7 @@ export default {
   mounted: function() {
       document.getElementById('model_adymic').style.display='none';
     this.getGoodsList();
+    document.title="请选择购买商品";
   },
   methods: {
     addCart(productId){

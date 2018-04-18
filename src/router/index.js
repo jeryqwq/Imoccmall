@@ -30,8 +30,8 @@ export default new Router({
       component:User
     },
     {
-      path:'/desc',
-      name:'desc',
+      path:'/productdesc',
+      name:'Productdesc',
       component:Desc
     }
   ]

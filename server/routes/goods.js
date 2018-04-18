@@ -12,6 +12,22 @@ mongoose.connection.on("error", () => {
 mongoose.connection.on("disconnected", () => {
   console.log('Mongo is disconnected')
 });
+router.get('/productdesc',(req,res,next)=>{
+  let _id=req.param('_id');
+  Goods.findById(_id,(err,data)=>{
+    if(err){
+      res.json({
+        status:1,
+        msg:err.message
+      })
+    }else{
+      res.json({
+        status:0,
+        result:data
+      })
+    }
+  })
+})
 router.get("/list", (req, res, next) => {
   let serchText = req.param('serchText');
   let priceLevel = req.param("priceLevel");
