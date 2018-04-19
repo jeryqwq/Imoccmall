@@ -112,7 +112,7 @@ router.get("/list", (req, res, next) => {
 router.post('/addCart', (req, res, next) => {
 
   var userId = req.body.userId;
-  var productId = req.body.productId;
+  var _id = req.body._id;
   var User = require('./../models/user');
   User.findOne({
     "userId": userId
@@ -124,9 +124,7 @@ router.post('/addCart', (req, res, next) => {
       })
     } else {
       if (userdata) {
-        Goods.findOne({
-          'productId': productId
-        }, (err, data2) => {
+        Goods.findById(_id, (err, data2) => {
           if (err) {
             res.json({
               status: 1,

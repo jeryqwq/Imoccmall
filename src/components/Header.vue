@@ -46,6 +46,7 @@
       import "./../assets/css/login.css";
       import axios from 'axios'
       import Model from './../components/Model'
+ import utils from './../util'
     export default{
         data(){
             return{
@@ -65,8 +66,12 @@ return this.$store.state.isLogin;
         },
         cartCount(){
           return this.$store.state.cartCount;
-        }
-      },
+        },
+        userId(){
+         return utils.getCookie("userId")
+          },
+        },
+       
         mounted(){
 this.checkLogin();
 this.getCartCount();
@@ -96,6 +101,7 @@ axios.post('/users/checklogin').then((res)=>{
   //  window.location.href='/#/';
  }else{
    this.$store.commit('updateIsLogin',true);
+   this.$store.commit('updateUserId',this.userId);
  }
 })
 },

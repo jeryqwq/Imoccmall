@@ -11,9 +11,9 @@
         </div>
         <img id="modelimg" v-lazy="url+imgUrl" width="100%" />
         <ul class="imgul" style="display:inline-block;margin-top:30px;">
-          <li @mouseover="reViewState=50;changImgUrl(mainImgUrl,true)">
+          <li   @mouseover="reViewState=50;changImgUrl(mainImgUrl,true)">
             <a>
-              <img :class="{'cur':reViewState==50}"  v-lazy="'/static/img/'+mainImgUrl" width="20%" />
+              <img  :class="{'cur':reViewState==50}"  v-lazy="'/static/img/'+mainImgUrl" width="20%" />
             </a>
           </li>
           <li  @mouseover="reViewState=index;changImgUrl(item.productImg,false)" v-for="(item,index) in productData.prodcutColor" v-bind:key="index">
@@ -68,7 +68,7 @@
           <p style="float:left;margin-top:10px">颜色/款式:&nbsp;&nbsp;</p>
           <li @click="colorState=index;changImgUrl(item.productImg,false)" v-for="(item,index) in productData.prodcutColor">
             <a>
-              <img :class="{'cur':colorState==index}" v-lazy="'/static/salerimg/'+item.productImg" width="10%" />
+              <img :class="{'cur':colorState==index}" v-lazy="'/static/salerimg/'+item.productImg" width="10%" style="margin-left:5px" />
             </a>
           </li>
         </ul>
@@ -79,7 +79,7 @@
           <li @click="changNum(0);">
             <a>-</a>
           </li>
-          <li style="width:15%;">
+          <li style="width:25%;">
             <input id='numText' type="text" v-model="productNumBuy" />
           </li>
           <li @click="changNum(1);">
@@ -91,8 +91,8 @@
         <br/>
         <br/>
         <ul style="display:inline-block;width:100%">
-          <a class="btn btn--m btn--m " style="float: left;">现在购买</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <a class="btn btn--m btn--red">加入购物车</a>
+          <a class="btn btn--m btn--m " :class="{'btn--dis':productNum<productNumBuy}" style="float: left;" @click="toCheckList()">现在购买</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class="btn btn--m btn--red" :class="{'btn--dis':productNum<productNumBuy}" @click="toaddCart()">加入购物车</a>
         </ul>
         <br/>
         <br/>
@@ -199,6 +199,7 @@
   import LocSolt from '@/components/LocSolt'
   import axios from "axios"
   import SubProductDesc from '@/components/SubProductDesc'
+  import utils from './../util'
   export default {
     data() {
       return {
@@ -215,17 +216,38 @@
  mainImgUrl:'',
  url:'/static/img/',
  salerInfo:[],
+ _id:''
       }
     },
     mounted() {
       this.getProductDesc();
-    },
+this._id=this.$route.query._id;
+    }
+    ,
    computed: {
      productReview(){
        return this.productData.productReview.length;
      }
    },
     methods: {
+      toCheckList(){
+        if(this.productNum<this.productNumBuy){
+            return;
+        }
+        var toBackEndCheckList={
+          _id:this.$store.state._id,
+          userId:this.$store.state.userId,
+          productNum:this.productNumBuy,
+          productPrice:productData.productSize[this.sizeState].price,
+        }
+this.$store.state.commit('updateToBackendCheckList',toBackEndCheckList);
+      },
+      toaddCart(){
+          if(this.productNum<this.productNumBuy){
+            return;
+        }
+utils.addCart(this._id,this.$store.state.userId);
+      },
       getSalerInfo(_id){
 axios.get('/salers/salerinfo?_id='+_id).then((res)=>{
 if(res.data.status==1){
@@ -463,13 +485,7 @@ this.salerInfo=res.data.result;
 
   .imgul li img {
     float: left;
-    margin-left: 5px
   }
-
-  .imgul li img:hover {
-    border-color:solid 2px #ff4400;
-  }
-
   .imgul .cur {
     border: solid 2px #ff4400;
   }
@@ -495,7 +511,7 @@ padding-right: 5px;
   .context {
     margin: 0 auto;
     padding-top: 30px;
-    width: 95%;
+    width: 80%;
     display: inline-block
   }
 

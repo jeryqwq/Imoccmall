@@ -48,8 +48,9 @@
               <div class="main">
                 <div class="name">{{item.productName}}</div>
                 <div class="price">{{item.salePrice}}</div>
+                <div style="float:right;font-size:10px" >已售({{item.productSalerNum}})件</div>
                 <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
+                  <a href="javascript:;" class="btn btn--m" @click="addCart(item._id)">加入购物车</a>
                 </div> 
               </div>
             </li>
@@ -82,6 +83,7 @@ import NavHeader from "@/components/Header.vue";
 import NavFooter from "@/components/Footer.vue";
 import axios from "axios";
 import Model from './../components/Model'
+import utils from './../util'
 export default {
   data() {
     return {
@@ -146,17 +148,18 @@ export default {
     document.title="请选择购买商品";
   },
   methods: {
-    addCart(productId){
-axios.post('/goods/addCart',{
-        "productId":productId,
-'userId':"1000007",
-}).then((res)=>{
-if(res.data.status==1){
-alert(res.data.msg);
-}else{
-  this.$store.commit('updateCartCount',res.data.cartCount);
-}
-})
+    addCart(_id){
+      utils.addCart(_id,this.$store.state.userId);
+// axios.post('/goods/addCart',{
+//         "_id":_id,
+// 'userId':this.$store.state.userId,
+// }).then((res)=>{
+// if(res.data.status==1){
+// alert(res.data.msg);
+// }else{
+//   this.$store.commit('updateCartCount',res.data.cartCount);
+// }
+// })
     },
      login(){
             if(this.userPwd==''||this.userName==''){this.errTip='请输入用户名或密码！！！';return};

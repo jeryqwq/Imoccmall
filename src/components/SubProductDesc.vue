@@ -20,7 +20,7 @@
         </div>
   <div class="ranking">
 
-<ul v-show="true">
+<ul v-if="true">
 <li><a><img  src="./../../static/img/22.jpg"/><p>夏可外穿春秋甜美韩版长袖休闲宽松</p><p style="color:#ff8000;font-weight:bold">$326.00</p></a></li>
 <li><a><img  src="./../../static/img/22.jpg"/><p>夏可外穿春秋甜美韩版长袖休闲宽松</p><p style="color:#ff8000;font-weight:bold">$326.00</p></a></li>
 <li><a><img  src="./../../static/img/22.jpg"/><p>夏可外穿春秋甜美韩版长袖休闲宽松</p><p style="color:#ff8000;font-weight:bold">$326.00</p></a></li>
@@ -46,7 +46,7 @@
             </li>
           </ul>
         </div>
-        <div class="prodctudesc" v-show="curStatus==1">
+        <div style="display: inline-block;" class="prodctudesc" v-show="curStatus==1">
           <ul>
             <li v-for="(item,index) in data.productDetail" v-bind:key="index">
               <h5>
@@ -58,7 +58,7 @@
           <img v-lazy="'/static/img/'+data.productImage" />
           <img  v-lazy="'/static/salerimg/'+item.productImg" v-for="item in data.prodcutColor" />
         </div>
-
+<!-- 评论区 -->
         <div class="productReview" v-show="curStatus==2">
           <ul>
             <li v-for="item in data.productReview">
@@ -81,6 +81,10 @@
             </li>
      
           </ul>
+        </div>
+
+        <div style="display: inline-block;" v-show="curStatus==3">
+          专项服务
         </div>
 
       </div>
@@ -113,7 +117,7 @@
       },
     },
     mounted() {
-      
+
     },
     computed: {
       reviews(){
@@ -152,7 +156,9 @@ height: 60px;
     float: left;
     width: 97%;
   }
-
+.productReview{
+      display: inline-block;
+}
   .productReview ul {
     width: 90%;
     display: inline-block;

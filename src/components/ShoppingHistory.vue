@@ -70,7 +70,7 @@ this.getCartList();
                 'M+' : date.getMonth() + 1, //month  
                 'd+' : date.getDate(), //day  
                 'm+' : date.getMinutes(), //minute  
-                'H+' : date.getHours(),
+                'H+' : date.getHours(),//hour
                 's+' : date.getSeconds(), //second  
                 'q+' : Math.floor((date.getMonth() + 3) / 3), //quarter  
                 'S' : date.getMilliseconds() //millisecond  

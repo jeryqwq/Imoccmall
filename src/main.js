@@ -5,33 +5,13 @@ import App from './App'
 import router from './router'
 import lazyload from 'vue-lazyload'
 import infiniteScroll from 'vue-infinite-scroll';
-import Vuex from 'vuex'
+import store from './../vuex/vuex'
 Vue.config.productionTip = false;
-Vue.use(Vuex);
 Vue.use(infiniteScroll);
  Vue.use(lazyload, {
   loading: "/static/loading/loading-bubbles.svg"
 });
-const store = new Vuex.Store({
-  state: {
-    userStates:1,
-    cartCount: 0,
-    nickName:'',
-    checkList:[],
-    toBackEndCheckList:[],
-    totalPrice:0,
-    isLogin:false
-  },
-  mutations: {
-    updateUserStates:(state,userStates)=>{state.userStates=userStates},
-    updateIsLogin:(state,isLogin)=>{state.isLogin=isLogin},
-    updateTotalPrice:(state,totalPrice)=>{state.totalPrice=totalPrice},
-    updateToBackendCheckList:(state,toBackEndCheckList)=>{state.toBackEndCheckList=toBackEndCheckList},
-    updateCheckList:(state,checkList)=>{state.checkList=checkList},
-  	updateUserInfo: (state,nickName) => {state.nickName=nickName},
-    updateCartCount: (state,cartCount) => {state.cartCount=cartCount},
-  }
-});
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
