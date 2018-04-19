@@ -25,7 +25,7 @@ alert(res.data.msg);
       return "";
      },
      countBestMethod(totalPrice,ticket){//自动选择最佳优惠卷的搭配，直接返回结果，后端再进行重新计算
-       var arr=new Array[totalPrice.length];
+       var arr=[];
 ticket.forEach((item,index) => {
   if(item.ticketFull>=totalPrice){
     if(item.ticketType=='discount'){//折扣卷
