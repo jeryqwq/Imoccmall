@@ -1,0 +1,346 @@
+.bigimg {
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    position: absolute;
+  }
+
+  .bigimg img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+
+  .salerticker h6 {
+    color: white;
+  }
+
+  .ticketinfo {
+    color: white;
+    padding-top: 4px
+  }
+
+  .salerticker div:nth-child(1) {
+    float: left;
+    background: #f2ebcf;
+    width: 40%;
+    height: 100%;
+    color: #ff0080;
+    border-right: dotted 2px black
+  }
+
+  .salerticker {
+    margin: 10px auto;
+    width: 90%;
+    height: 40px;
+    background: #ed145b
+  }
+
+  .addshop {
+    margin: 10px;
+  }
+
+  .addshop li {
+    border: solid 1px rgba(0, 0, 0, 0);
+    padding: 0 4px;
+  }
+
+  .addshop li:hover {
+    border: solid 1px #c0c0c0;
+
+  }
+
+  .errTotas {
+    border: solid 2px #ff0000;
+    line-height: 25px;
+    width: fit-content;
+    padding-left: 10px;
+    color: #808080;
+    font-size: 10px
+  }
+
+  .salerinfo ul li {
+    float: left;
+    font-size: 12px;
+    line-height: 30px;
+  }
+
+  .salerlevel {
+    width: 100%;
+    display: inline-block;
+    height: 70px;
+    background-clip: padding-box;
+    background: linear-gradient(to bottom, yellow, white);
+    font-weight: bold;
+    padding-top: 6px;
+    color: tomato
+  }
+
+  .container-right {
+    border: solid 2px rgb(253, 253, 175);
+    margin-left: 1%;
+    z-index: -1;
+  }
+
+  .paymethod :nth-child(2) {
+    background-image: url('./../zhifubao.png');
+  }
+
+  .paymethod :nth-child(3) {
+    background-image: url('./../xinyongka.png');
+  }
+
+  .paymethod :nth-child(4) {
+    background-image: url('./../bit.jpg');
+    background-size: 20px 20px
+  }
+
+  .paymethod li {
+    float: left;
+    margin-right: 10px;
+    padding-left: 25px;
+    background-repeat: no-repeat;
+    background-position: left;
+  }
+
+  .commitment li {
+    float: left;
+    margin-right: 10px;
+    padding-left: 25px;
+    background-repeat: no-repeat;
+    background-position: left;
+  }
+
+  .commitment :nth-child(2) {
+    background-image: url('./../fahuo.jpg');
+  }
+
+  .commitment :nth-child(3) {
+    background-image: url('./../yunfeixian.png');
+  }
+
+  #smalldiv {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 200px;
+    height: 200px;
+  }
+
+  #numText {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 7px;
+  }
+
+  .numli li {
+    float: left;
+    width: 8%;
+    height: 25px;
+    border: solid 1px #d3cece;
+    text-align: center;
+    font-weight: bold;
+    background: #c0c0c0;
+  }
+
+  .numli {
+    width: 80%;
+  }
+
+  .imgul li img {
+    float: left;
+  }
+  .imgul .cur {
+    border: solid 2px #ff4400;
+  }
+
+  .sizeLi li {
+    float: left;
+padding-right: 5px;
+    margin: 5px;
+    padding-left: 5px;
+    border: solid 1px #d3cece
+  }
+
+
+  .sizeLi li:hover {
+    border-color: #ff4400;
+  }
+
+  .sizeLi .cur {
+    border: solid 2px #ff4400;
+
+  }
+
+  .context {
+    margin: 0 auto;
+    padding-top: 30px;
+    width: 80%;
+    display: inline-block
+  }
+
+  .img-left {
+    float: left;
+    width: 37%;
+  }
+
+  .container-center {
+    float: left;
+    width: 40%;
+    text-align: left;
+    line-height: 30px;
+    margin-left: 3%
+  }
+
+  .container-right {
+    float: right;
+    width: 19%;
+    padding-bottom: 50px;
+    position: absolute;
+    margin-left: 65%;
+  }
+
+  .container-productInfo {
+    width: 95%;
+    background: #fff2e8;
+    font-weight: bold;
+    line-height: 40px;
+  }
+  
+.ranking ul{
+    display: block;
+    }
+    .ranking ul li{
+    margin: 30px 10px;
+    padding-top: 20px;
+    text-align: left;
+    border-top: 1px dashed #000;
+    }
+    .ranking ul li img{
+    float: left;
+    width: 40px;
+    }
+    .ranking ul li img:hover{
+    width: 60px;
+    height: 60px;
+    }
+    .ranking ul li p{
+      margin: 0 5px;
+      font-size: 10px;
+      line-height: 15px;
+    }
+    .reviewname{
+      margin-top: 50px;
+    }
+      .timeinfo {
+        float: left;
+        width: 97%;
+      }
+    .productReview{
+          display: inline-block;
+    }
+      .productReview ul {
+        width: 90%;
+        display: inline-block;
+      }
+    
+      .productReview ul li h5 {
+        float: left;
+      }
+      .productReview ul li{
+        border-top: solid 1px #c0c0c0;
+        padding-bottom: 20px;
+        width: 100%;
+        display: inline-block;
+      }
+      .productReview ul li div {
+        width: 100%;
+        height: 50px;
+        background-image: url(./../buyer.png);
+        background-size: 50px 50px;
+        margin: 15px 0;
+        background-repeat: no-repeat;
+        text-align: left
+      }
+    
+      .productshow ul {
+        width: 100%;
+        margin:15px 0px 0 0;
+        display: inline-block;
+      }
+    
+      .productshow ul li {
+        width: 45%;
+        float: left;
+        padding: 10px 0;
+        border: solid 1px #ffffff;
+      }
+    
+      .productshow ul .cur {
+        border: solid 1px #c0c0c0;
+        background: white;
+        border-bottom: none;
+      }
+    
+      .salerheader {
+        width: 100%;
+        color: white;
+        background: #808080;
+        padding: 10px 0;
+      }
+    
+      .subproductdesc-center img {
+        width: 95%;
+        margin-top: 30px;
+      }
+    
+      .prodctudesc ul {
+        width: 100%;
+      }
+    
+      .prodctudesc ul li {
+        margin-top: 8px;
+        width: 30%;
+        float: left;
+      }
+    
+      .subproductdesc-center .one ul {
+        width: 100%;
+        border-top: solid 1px #c0c0c0;
+        display: inline-block;
+        line-height: 40px;
+      }
+    
+      .subproductdesc-center .one ul li {
+        border-right: solid 1px #c0c0c0;
+        border-bottom: solid 1px #c0c0c0;
+        background: #e3e3e3;
+        width: 20%;
+        float: left;
+      }
+    
+      .subproductdesc-center .one .cur {
+        background: white;
+        border-bottom: none;
+        border-top: solid 2px #ff8000;
+        color: tomato;
+      }
+    
+      .subproductdesc-left {
+        float: left;
+        width: 20%;
+      }
+    
+      .subproductdesc-center {
+        float: left;
+        width: 60%;
+        border-left: solid 1px #c0c0c0;
+        border-right: solid 1px #c0c0c0;
+        background: white
+      }
+    
+      .subproductdesc-right {
+        float: right;
+        width: 20%;
+    
+      }
+    

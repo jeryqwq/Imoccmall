@@ -1,6 +1,6 @@
 <template>
 <div>
-  <model>
+  <model v-show="isModel" :msg='false'>
    <div slot="message">
                 <div  class="msg_pop">添加新地址</div>
                 <div id="darkbannerwrap"></div>
@@ -12,9 +12,9 @@
         <input class="txt_form" placeholder="请输入收货人电话" v-model="tel" type="number">
    <input class="txt_form" placeholder="请输入邮编" v-model="postNum" type="number">
    <input value="确定" class="login_submit" @click="addAddress()" style="width:100%;" type="button"  >
+            <input type="button" class="login_submit" @click="cancel()" style="width:100%;" value="取消" />
               </div>
       </model>
-
   </model>
   <nav-header></nav-header>
 <loc-solt :location="location"></loc-solt>
@@ -172,7 +172,8 @@ export default {
         streetName:'',
         postNum:'',
         tel:'',
-location:'订单确认'
+location:'订单确认',
+isModel:false
       }
   },
   components:{
@@ -186,8 +187,6 @@ location:'订单确认'
   },
   mounted(){
     this.getAddress();
-           document.getElementById('model_adymic').style.display='none';
-
 // this.cartList=this.checkList;
   },
 computed: {
@@ -246,7 +245,10 @@ this.addressList.forEach((element,i) => {
 });
 },
     showModel(){
-       document.getElementById('model_adymic').style.display='inline';
+      this.isModel=true;
+    },
+    cancel(){
+this.isModel=false;
     },
   getAddress(){
 axios.post('/users/getAddressList').then((res)=>{
@@ -272,7 +274,7 @@ axios.post('/users/addAddress',{
 if(res.data.status==0){
   this.getAddress();
   setTimeout(()=>{
-       document.getElementById('model_adymic').style.display='none';
+      this.isModel=false
   },500)
 }
 })

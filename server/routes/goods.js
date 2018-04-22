@@ -38,8 +38,9 @@ router.get("/list", (req, res, next) => {
   let isDeafault = req.param('isDeafault');
   let min = 0,
     max = 0;
+    let query= new RegExp(serchText, 'i');
   let params = {
-    // 'productName':serchText
+    productName:query
   };
   if (priceLevel != "all") {
     switch (parseInt(priceLevel)) {
@@ -77,6 +78,7 @@ router.get("/list", (req, res, next) => {
         break;
     }
     params = {
+      productName:query,
       salePrice: {
         $lt: max,
         $gte: min,
@@ -88,6 +90,16 @@ router.get("/list", (req, res, next) => {
   if (isDeafault == 1) {
     goodsModel.sort({
       'salePrice': sort
+    });
+  }
+  if (isDeafault == 2) {
+    goodsModel.sort({
+      'productSalerNum': sort
+    });
+  }
+  if (isDeafault == 3) {
+    goodsModel.sort({
+      'productSaler_id': sort
     });
   }
   goodsModel.exec((err, data) => {

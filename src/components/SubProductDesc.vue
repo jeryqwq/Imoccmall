@@ -10,22 +10,32 @@
         </div>
         <div class="productshow">
           <ul>
-            <li :class="{'cur':subCurStatus==1}" @mouseover="changsubCurStatus(1)">
-              <a>销售量</a>
+            <li :class="{'cur':subCurStatus==1}" @click="changsubCurStatus(1);getSalerproductop('productSalerNum')">
+              <a>销售量
+                <span v-show="subCurStatus==1" style="color:#ff8040">↑</span>
+              </a>
             </li>
-            <li :class="{'cur':subCurStatus==2}" @mouseover="changsubCurStatus(2)">
-              <a>收藏数</a>
+            <li :class="{'cur':subCurStatus==2}" @click="changsubCurStatus(2);getSalerproductop('salePrice')">
+              <a>价格
+                <span v-show="subCurStatus==2" style="color:#ff8040">↑</span>
+              </a>
             </li>
           </ul>
         </div>
-  <div class="ranking">
+        <div class="ranking">
 
-<ul v-if="true">
-<li><a><img  src="./../../static/img/22.jpg"/><p>夏可外穿春秋甜美韩版长袖休闲宽松</p><p style="color:#ff8000;font-weight:bold">$326.00</p></a></li>
-<li><a><img  src="./../../static/img/22.jpg"/><p>夏可外穿春秋甜美韩版长袖休闲宽松</p><p style="color:#ff8000;font-weight:bold">$326.00</p></a></li>
-<li><a><img  src="./../../static/img/22.jpg"/><p>夏可外穿春秋甜美韩版长袖休闲宽松</p><p style="color:#ff8000;font-weight:bold">$326.00</p></a></li>
-</ul>
-</div>
+          <ul>
+            <li v-for="(item,index) in productTop10">
+              <a :href="'/#/productdesc?_id='+item._id" target="_blank">
+                <img v-lazy="'/static/img/'+item.productImage" />
+                <p>{{item.productName}}</p>
+                <p style="color:#ff8000;font-weight:bold">${{item.salePrice}}
+                  <span style="float:right;color:#808080;font-size:7px" v-show="subCurStatus==1">销量:{{item.productSalerNum}}</span>
+                </p>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
       <!--part center-->
       <div class="subproductdesc-center">
@@ -41,7 +51,7 @@
                 </span>
               </a>
             </li>
-            <li :class="{'cur':curStatus==3}" @click="changCurStatus(3)">
+            <li :class="{'cur':curStatus==3}" @click="changCurStatus(3);">
               <a>专享服务</a>
             </li>
           </ul>
@@ -53,33 +63,33 @@
                 <span>{{item}}</span>
               </h5>
             </li>
-           
+
           </ul>
           <img v-lazy="'/static/img/'+data.productImage" />
-          <img  v-lazy="'/static/salerimg/'+item.productImg" v-for="item in data.prodcutColor" />
+          <img v-lazy="'/static/salerimg/'+item.productImg" v-for="item in data.prodcutColor" />
         </div>
-<!-- 评论区 -->
+        <!-- 评论区 -->
         <div class="productReview" v-show="curStatus==2">
           <ul>
             <li v-for="item in data.productReview">
               <div>
-                     <h5 class="reviewname">用户名:
-                      <span>{{item.reviewName}}</span>
-                    </h5>
-                <h5 style="float:right;width:70%;">{{item.reviewText}}  </h5>
-                  <br/>
-                  <br/>
-                  <h6 class="timeinfo">
-               
-                    <span style="float:right; color: #808080;">{{data.reviewTime}} &nbsp;&nbsp;&nbsp;颜色/款式:
-                      <span>{{item.productColor}}&nbsp;&nbsp;</span>尺码/套餐:
-                      <span>{{item.productSize}}</span>
-                    </span>
-                  </h6>
-              
+                <h5 class="reviewname">用户名:
+                  <span>{{item.reviewName}}</span>
+                </h5>
+                <h5 style="float:right;width:70%;">{{item.reviewText}} </h5>
+                <br/>
+                <br/>
+                <h6 class="timeinfo">
+
+                  <span style="float:right; color: #808080;">{{data.reviewTime}} &nbsp;&nbsp;&nbsp;颜色/款式:
+                    <span>{{item.productColor}}&nbsp;&nbsp;</span>尺码/套餐:
+                    <span>{{item.productSize}}</span>
+                  </span>
+                </h6>
+
               </div>
             </li>
-     
+
           </ul>
         </div>
 
@@ -100,12 +110,14 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   export default {
-    props:['data'],
+    props: ['data'],
     data() {
       return {
         curStatus: 1,
-        subCurStatus: 1
+        subCurStatus: 1,
+        productTop10: [],
       }
     },
     methods: {
@@ -115,154 +127,30 @@
       changCurStatus(index) {
         this.curStatus = index;
       },
+      getSalerproductop(salerNumOrReView) {
+        //productSalerNum   or    productReview
+        var params = {
+          productSaler_id: this.data.productSaler_id,
+          sortMethod: salerNumOrReView,
+          skip: 0
+        }
+        axios.get('/salers/salerinfo/productop', {
+          params: params
+        }).then((res) => {
+          if (res.data.status == 0) {
+            this.productTop10 = res.data.result;
+          }
+        });
+      },
     },
     mounted() {
-
+      this.getSalerproductop('productSalerNum');
     },
     computed: {
-      reviews(){
-return this.data.productReview.length;
+      reviews() {
+        return this.data.productReview.length;
       }
     }
   }
 
 </script>
-
-<style>
-.ranking ul{
-display: block;
-}
-.ranking ul li{
-margin: 30px 10px;
-text-align: left;
-}
-.ranking ul li img{
-float: left;
-width: 40px;
-}
-.ranking ul li img:hover{
-width: 60px;
-height: 60px;
-}
-.ranking ul li p{
-  margin: 0 5px;
-  font-size: 10px;
-  line-height: 15px;
-}
-.reviewname{
-  margin-top: 50px;
-}
-  .timeinfo {
-    float: left;
-    width: 97%;
-  }
-.productReview{
-      display: inline-block;
-}
-  .productReview ul {
-    width: 90%;
-    display: inline-block;
-  }
-
-  .productReview ul li h5 {
-    float: left;
-  }
-  .productReview ul li{
-    border-top: solid 1px #c0c0c0;
-    padding-bottom: 20px;
-    width: 100%;
-    display: inline-block;
-  }
-  .productReview ul li div {
-    width: 100%;
-    height: 50px;
-    background-image: url(./../assets/buyer.png);
-    background-size: 50px 50px;
-    margin: 15px 0;
-    background-repeat: no-repeat;
-    text-align: left
-  }
-
-  .productshow ul {
-    width: 100%;
-    margin:15px 0px 0 0;
-    display: inline-block;
-  }
-
-  .productshow ul li {
-    width: 25%;
-    float: left;
-    padding: 10px 0;
-    border: solid 1px #ffffff;
-  }
-
-  .productshow ul .cur {
-    border: solid 1px #c0c0c0;
-    background: white;
-    border-bottom: none;
-  }
-
-  .salerheader {
-    width: 100%;
-    color: white;
-    background: #808080;
-    padding: 10px 0;
-  }
-
-  .subproductdesc-center img {
-    width: 95%;
-    margin-top: 30px;
-  }
-
-  .prodctudesc ul {
-    width: 100%;
-  }
-
-  .prodctudesc ul li {
-    margin-top: 8px;
-    width: 30%;
-    float: left;
-  }
-
-  .subproductdesc-center .one ul {
-    width: 100%;
-    border-top: solid 1px #c0c0c0;
-    display: inline-block;
-    line-height: 40px;
-  }
-
-  .subproductdesc-center .one ul li {
-    border-right: solid 1px #c0c0c0;
-    border-bottom: solid 1px #c0c0c0;
-    background: #e3e3e3;
-    width: 20%;
-    float: left;
-  }
-
-  .subproductdesc-center .one .cur {
-    background: white;
-    border-bottom: none;
-    border-top: solid 2px #ff8000;
-    color: tomato;
-  }
-
-  .subproductdesc-left {
-    float: left;
-    width: 20%;
-  }
-
-  .subproductdesc-center {
-    float: left;
-    width: 60%;
-    border-left: solid 1px #c0c0c0;
-    border-right: solid 1px #c0c0c0;
-    background: white
-  }
-
-  .subproductdesc-right {
-    float: right;
-    width: 20%;
-
-  }
-
-</style>

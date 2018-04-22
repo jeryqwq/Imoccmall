@@ -1,9 +1,10 @@
 var mongoose=require('mongoose');
 var userSchema=new mongoose.Schema({
-    'userId':String,
+'userId':String,
 'userName':String,
 'userPwd':String,
 'nickName':String,
+'bornDate':Date,
 'orderList':[{
     "productId":String,
     "productName":String,
@@ -22,13 +23,19 @@ var userSchema=new mongoose.Schema({
   //  'checked':Boolean
 }],
 'addressList':[{
-    addressId:Number,
-    userName:String,
-    streetName:String,
-    postNum:String,
-    tel:String,
-    isDefault:Boolean,
+    'addressId':Number,
+    'userName':String,
+    'streetName':String,
+    'postNum':String,
+    'tel':String,
+    'isDefault':Boolean,
 }],
-'tickers':[]
+'tickets':[{
+    'saler_id':'saler',
+    "ticketType" : String,
+    "ticketValue" : Number,
+    "ticketFull" : Number,
+    "ticketNum" : Number
+}]
 });
 module.exports=mongoose.model('User',userSchema,'users');

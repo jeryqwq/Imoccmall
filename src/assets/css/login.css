@@ -154,7 +154,6 @@ a {
    }
 .txt_form{
   margin-top: 20px;
-    border: 1px solid #DCDEE0;
     vertical-align: middle;
     border-radius: 3px;
     height: 50px;
@@ -163,15 +162,10 @@ a {
     color: #555555;
     outline: none;
     width: 100%;
-        -webkit-appearance: textfield;
     background-color: white;
-    -webkit-rtl-ordering: logical;
-    user-select: text;
-    cursor: auto;
-      border: 2px solid #61b1ef;
 }
 .txt_form:hover{
- border: 2px solid #61b1ef;
+ border: 1px solid #61b1ef;
 }
 .md-content .btn-login{
   display: block;

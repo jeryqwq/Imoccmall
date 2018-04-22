@@ -31,7 +31,7 @@
         <h2>
           <b>{{productData.productName}}</b>
         </h2>
-        <h5 style="color:#808080;">{{productData.productDesc}}</h5>
+        <h5 style="color:#808080;line-height:15px">{{productData.productDesc}}</h5>
         <div class="container-productInfo">
           <div style="float:left">
             <span style="font-size:10px;color:#808080">
@@ -164,7 +164,7 @@
 <h3>卖家很小气</h3>
 </div> -->
 
-        <div v-for="item in salerInfo.shopTickets" class="salerticker">
+        <div v-for="item in tickets" class="salerticker">
           <div>
             <h3>
               <b v-if="item.ticketType=='full'">优惠券</b>
@@ -183,7 +183,15 @@
             </h6>
           </a>
         </div>
-
+      <div class="shipping-addr-more">
+          <a class="addr-more-btn up-down-btn " :class="{'open':ticketlimit==3}" href="javascript:;" @click="expend()">
+            more
+            <i class="i-up-down">
+              <i class="i-up-down-l"></i>
+              <i class="i-up-down-r"></i>
+            </i>
+          </a>
+        </div>
 
 
       </div>
@@ -193,6 +201,7 @@
   </div>
 </template>
 <script>
+import './../assets/css/desc.css'
   import SalerInfo from '@/components/SalerInfo'
   import NavHeader from '@/components/Header'
   import NavFooter from '@/components/Footer'
@@ -216,20 +225,35 @@
  mainImgUrl:'',
  url:'/static/img/',
  salerInfo:[],
- _id:''
+ id:'',
+ ticketlimit:3,
+ saler_id:''
       }
     },
+
     mounted() {
       this.getProductDesc();
-this._id=this.$route.query._id;
+         this.id=this.$route.query._id;
+        
     }
     ,
    computed: {
      productReview(){
        return this.productData.productReview.length;
-     }
+     },
+tickets(){
+ return this.salerInfo.shopTickets.slice(0,this.ticketlimit);
+}
    },
     methods: {
+    
+    expend(){
+if(this.ticketlimit==3){
+  this.ticketlimit=6;
+}else{
+  this.ticketlimit=3;
+}
+    },
       toCheckList(){
         if(this.productNum<this.productNumBuy){
             return;
@@ -246,7 +270,17 @@ this.$store.state.commit('updateToBackendCheckList',toBackEndCheckList);
           if(this.productNum<this.productNumBuy){
             return;
         }
-utils.addCart(this._id,this.$store.state.userId);
+      axios.post('/goods/addCart',{
+        "_id":this.id,
+'userId':this.$store.state.userId
+}).then((res)=>{
+if(res.data.status==1){
+alert(res.data.msg);
+}else{
+  this.$store.commit('updateCartCount',res.data.cartCount);
+}
+})
+     
       },
       getSalerInfo(_id){
 axios.get('/salers/salerinfo?_id='+_id).then((res)=>{
@@ -335,210 +369,4 @@ this.salerInfo=res.data.result;
   }
 
 </script>
-<style>
-  .bigimg {
-    width: 400px;
-    height: 400px;
-    overflow: hidden;
-    position: absolute;
-  }
 
-  .bigimg img {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-  }
-
-  .salerticker h6 {
-    color: white;
-  }
-
-  .ticketinfo {
-    color: white;
-    padding-top: 4px
-  }
-
-  .salerticker div:nth-child(1) {
-    float: left;
-    background: #f2ebcf;
-    width: 40%;
-    height: 100%;
-    color: #ff0080;
-    border-right: dotted 2px black
-  }
-
-  .salerticker {
-    margin: 10px auto;
-    width: 90%;
-    height: 40px;
-    background: #ed145b
-  }
-
-  .addshop {
-    margin: 10px;
-  }
-
-  .addshop li {
-    border: solid 1px rgba(0, 0, 0, 0);
-    padding: 0 4px;
-  }
-
-  .addshop li:hover {
-    border: solid 1px #c0c0c0;
-
-  }
-
-  .errTotas {
-    border: solid 2px #ff0000;
-    line-height: 25px;
-    width: fit-content;
-    padding-left: 10px;
-    color: #808080;
-    font-size: 10px
-  }
-
-  .salerinfo ul li {
-    float: left;
-    font-size: 12px;
-    line-height: 30px;
-  }
-
-  .salerlevel {
-    width: 100%;
-    display: inline-block;
-    height: 70px;
-    background-clip: padding-box;
-    background: linear-gradient(to bottom, yellow, white);
-    font-weight: bold;
-    padding-top: 6px;
-    color: tomato
-  }
-
-  .container-right {
-    border: solid 2px rgb(253, 253, 175);
-    margin-left: 1%;
-  }
-
-  .paymethod :nth-child(2) {
-    background-image: url('./../assets/zhifubao.png');
-  }
-
-  .paymethod :nth-child(3) {
-    background-image: url('./../assets/xinyongka.png');
-  }
-
-  .paymethod :nth-child(4) {
-    background-image: url('./../assets/bit.jpg');
-    background-size: 20px 20px
-  }
-
-  .paymethod li {
-    float: left;
-    margin-right: 10px;
-    padding-left: 25px;
-    background-repeat: no-repeat;
-    background-position: left;
-  }
-
-  .commitment li {
-    float: left;
-    margin-right: 10px;
-    padding-left: 25px;
-    background-repeat: no-repeat;
-    background-position: left;
-  }
-
-  .commitment :nth-child(2) {
-    background-image: url('./../assets/fahuo.jpg');
-  }
-
-  .commitment :nth-child(3) {
-    background-image: url('./../assets/yunfeixian.png');
-  }
-
-  #smalldiv {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
-    width: 200px;
-    height: 200px;
-  }
-
-  #numText {
-    width: 100%;
-    height: 100%;
-    padding-bottom: 7px;
-  }
-
-  .numli li {
-    float: left;
-    width: 8%;
-    height: 25px;
-    border: solid 1px #d3cece;
-    text-align: center;
-    font-weight: bold;
-    background: #c0c0c0;
-  }
-
-  .numli {
-    width: 80%;
-  }
-
-  .imgul li img {
-    float: left;
-  }
-  .imgul .cur {
-    border: solid 2px #ff4400;
-  }
-
-  .sizeLi li {
-    float: left;
-padding-right: 5px;
-    margin: 5px;
-    padding-left: 5px;
-    border: solid 1px #d3cece
-  }
-
-
-  .sizeLi li:hover {
-    border-color: #ff4400;
-  }
-
-  .sizeLi .cur {
-    border: solid 2px #ff4400;
-
-  }
-
-  .context {
-    margin: 0 auto;
-    padding-top: 30px;
-    width: 80%;
-    display: inline-block
-  }
-
-  .img-left {
-    float: left;
-    width: 37%;
-  }
-
-  .container-center {
-    float: left;
-    width: 40%;
-    text-align: left;
-    line-height: 30px;
-    margin-left: 3%
-  }
-
-  .container-right {
-    float: right;
-    width: 19%;
-    padding-bottom: 50px;
-  }
-
-  .container-productInfo {
-    width: 95%;
-    background: #fff2e8;
-    font-weight: bold;
-    line-height: 40px;
-  }
-
-</style>

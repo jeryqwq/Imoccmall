@@ -31,7 +31,7 @@ if(req.cookies.userId){
   next();
 }
 else{
-   if(urlpath=='/goods/productdesc'||urlpath=='/users/login'||urlpath=='/users/logout'||urlpath=='/goods/list'){
+   if(urlpath== '/salers/salerinfo'||urlpath=='/goods/productdesc'||urlpath=='/users/login'||urlpath=='/users/logout'||urlpath=='/goods/list'){
     next();
   }else{
     res.json({

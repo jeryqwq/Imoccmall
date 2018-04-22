@@ -8,6 +8,24 @@ var crypto = require('crypto');
 
 
 
+router.get('/gettickets',(req,res,next)=>{
+  let userId=req.cookies.userId;
+  user.findOne({
+    userId:userId
+  },(err,data)=>{
+ if(err){
+   res.json({
+     status:1,
+     msg:err.message
+   })
+ }else{
+   res.json({
+     status:0,
+     result:data.tickets
+   })
+ }
+  })
+})
 router.get('/getHistory', (req, res, next) => {
   let userId = req.cookies.userId;
   user.findOne({
@@ -26,9 +44,6 @@ router.get('/getHistory', (req, res, next) => {
       })
     }
   })
-
-
-
 })
 
 

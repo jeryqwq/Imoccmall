@@ -53,6 +53,7 @@ overflow-y: scroll;">
     </div>    
 </template>
 <script>
+import utils from './../util'
 import axios from "axios"
 export default {
   data(){
@@ -64,31 +65,11 @@ cartList:[]
 this.getCartList();
   },
   methods: {
-    dateFormat(date, format){
-   date = new Date(date);  
-            var o = {  
-                'M+' : date.getMonth() + 1, //month  
-                'd+' : date.getDate(), //day  
-                'm+' : date.getMinutes(), //minute  
-                'H+' : date.getHours(),//hour
-                's+' : date.getSeconds(), //second  
-                'q+' : Math.floor((date.getMonth() + 3) / 3), //quarter  
-                'S' : date.getMilliseconds() //millisecond  
-            };  
-            if (/(y+)/.test(format))  
-                format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));  
-   
-            for (var k in o)  
-                if (new RegExp('(' + k + ')').test(format))  
-                    format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length));  
-   
-            return format;  
-    },
       getCartList(){
           axios.get('/users/getHistory').then((res)=>{
               if(res.data.status==0){
                 for (const item of res.data.result) {
-                 item.timeOfBuy=this.dateFormat(item.timeOfBuy,'yyyy-MM-dd HH:mm:ss');
+                 item.timeOfBuy=utils.dateFormat(item.timeOfBuy,'yyyy-MM-dd HH:mm:ss');
                 }
                 this.cartList=res.data.result;
               }else{

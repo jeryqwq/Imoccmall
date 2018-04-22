@@ -1,6 +1,6 @@
 <template>
   <div>
-    <model>
+    <model v-show="isModel" :msg='false'>
    <div slot="message">
                 <div  class="msg_pop" v-text="addAddressStatue"></div>
                 <div id="darkbannerwrap"></div>
@@ -12,6 +12,8 @@
         <input class="txt_form" placeholder="请输入收货人电话" v-model="tel" type="number">
    <input class="txt_form" placeholder="请输入邮编" v-model="postNum" type="number">
    <input value="确定" class="login_submit" @click="addAddress()" style="width:100%;" type="button"  >
+                         <input type="button" class="login_submit" @click="cancel()" style="width:100%;" value="取消" />
+
               </div>
       </model>
      <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -110,7 +112,8 @@ export default {
         limit:3,
         isDefault:[],
         addAddressStatue:'添加新地址',
-        _id:''
+        _id:'',
+        isModel:false,
       }
   },
 components: {
@@ -118,9 +121,12 @@ components: {
 },
   mounted () {
     this.getAddress();
-          document.getElementById('model_adymic').style.display='none';
+        this.isModel=false
   },
   methods: {
+    cancel(){
+this.isModel=false;
+    },
     setDefaultAddress(index){
     axios.post('/users/setDefaultAddress',{
       'index':index
@@ -150,7 +156,7 @@ res.data.result.forEach((element,index) => {
 })
   },
   showModel(state,index){
-       document.getElementById('model_adymic').style.display='inline';
+      this.isModel=true;
 if(state===0){//edit
 this.addAddressStatue='编辑地址';
 this.userName=this.addressList[index].userName;
@@ -182,7 +188,7 @@ axios.post('/users/addAddress',{
 if(res.data.status==0){
   this.getAddress();
   setTimeout(()=>{
-       document.getElementById('model_adymic').style.display='none';
+     this.isModel=false;
   },500)
 }
 })

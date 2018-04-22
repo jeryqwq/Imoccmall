@@ -6,6 +6,19 @@
           <path class="path3" d="M27.514 25.594c-1.769 0-3.203 1.434-3.203 3.203s1.434 3.203 3.203 3.203c1.769 0 3.203-1.434 3.203-3.203s-1.434-3.203-3.203-3.203zM27.514 30.717c-1.060 0-1.92-0.86-1.92-1.92s0.86-1.92 1.92-1.92c1.060 0 1.92 0.86 1.92 1.92s-0.86 1.92-1.92 1.92z"></path>
           <path class="path4" d="M9.599 25.594c-1.769 0-3.203 1.434-3.203 3.203s1.434 3.203 3.203 3.203c1.769 0 3.203-1.434 3.203-3.203s-1.434-3.203-3.203-3.203zM9.599 30.717c-1.060 0-1.92-0.86-1.92-1.92s0.86-1.92 1.92-1.92c1.060 0 1.92 0.86 1.92 1.92s-0.86 1.92-1.92 1.92z"></path>
         </symbol>
+
+          <model v-show="mdShow" :msg="true">
+        <div slot="message" >
+                <div  class="msg_pop">开启购物之旅</div>
+                <div id="darkbannerwrap"></div>
+                <p class="tip" v-text="errTip" style="color:red" ></p>
+  </div>
+                          <div slot="btnGroup" @keyup.enter="login()">
+    <input class="txt_form" placeholder="请输入用户名:" v-model="userName" type="text">
+               <input class="txt_form" placeholder="请输入密码:" v-model="userPwd"  type="password">
+               <input value="登录" class="login_submit" @click="login()" style="width:100%;" type="button"  >
+              </div>
+      </model>
         <div class="navbar">
           <div class="navbar-left-container">
             <a href="http://chenjieweb.top/enter">
@@ -50,14 +63,19 @@
     export default{
         data(){
             return{
-              mdShow:false,
-              isSetting:false
+              isSetting:false,
+     userPwd:'',
+              userName:'',
+              errTip:'',
             }
         },
         components:{
 Model:Model
         },
       computed:{
+        mdShow(){
+  return this.$store.state.mdShow;
+        },
         nickName(){
           return this.$store.state.nickName;
         },
@@ -75,9 +93,29 @@ return this.$store.state.isLogin;
         mounted(){
 this.checkLogin();
 this.getCartCount();
-//  document.getElementById('model_adymic').style.display='none';
         },
         methods:{
+              login(){
+            if(this.userPwd==''||this.userName==''){this.errTip='请输入用户名或密码！！！';return};
+            axios.post('/users/login',{
+userName:this.userName,
+userPwd:this.userPwd
+            }).then((res)=>{
+if(res.data.status==0){
+  this.errTip=res.data.msg;
+  
+     this.$store.commit('updateUserInfo',res.data.nickName);
+     this.$store.commit('updateIsLogin',true);
+     this.$store.commit('updateCartCount',res.data.cartCount);
+setTimeout(()=>{
+ this.$store.commit('updateMdShow',false);
+},800);
+}else{
+  this.errTip=res.data.msg;
+  this.userPwd='';this.userName='';
+}
+            })
+          },
                 changeUerStates(index){
         this.$store.commit('updateUserStates',index);
       },
@@ -89,16 +127,12 @@ if(res.data.status==0){
 })
           },
           showModel(){
-             window.location.href='/#/';
-             setTimeout(()=>{
-  document.getElementById('model_adymic').style.display='inline';
-             },500)
+           this.$store.commit('updateMdShow',true);
           },
 checkLogin(){
 axios.post('/users/checklogin').then((res)=>{
  if(res.data.status==1){
    alert(res.data.msg);
-  //  window.location.href='/#/';
  }else{
    this.$store.commit('updateIsLogin',true);
    this.$store.commit('updateUserId',this.userId);
@@ -111,7 +145,6 @@ axios.post('/users/logout').then((res)=>{
  if(res.data.status==0){  
    this.$store.commit('updateIsLogin',false);
    alert(res.data.msg)
-   window.location.href='/#/';
    };
 })
           },

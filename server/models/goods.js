@@ -18,7 +18,7 @@ var productSchema = new Schema({
   'productSize': [
     {
     "value":String,
-    "price":String
+    "price":Number
     }
   ],
   'prodcutColor': [

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
+      mdShow:false,
       userStates:1,
       cartCount: 0,
       nickName:'',
@@ -13,6 +14,7 @@ const store = new Vuex.Store({
       userId:''
     },
     mutations: {
+      updateMdShow:(state,mdShow)=>{state.mdShow=mdShow},
       updateUserId:(state,userId)=>{state.userId=userId},
       updateUserStates:(state,userStates)=>{state.userStates=userStates},
       updateIsLogin:(state,isLogin)=>{state.isLogin=isLogin},

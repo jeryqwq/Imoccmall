@@ -1,7 +1,7 @@
 <template>
 <div>
  <div>
-    <model>
+    <model v-show="isModel" :msg='false'>
         <div slot="message">
                 <div  class="msg_pop">是否从购物车删除该商品</div>
                 <div id="darkbannerwrap"></div>
@@ -137,6 +137,7 @@ export default {
   
   data(){ 
 return{
+  isModel:false,
   subTotal:[],
   singleTotal:[],
   totalPrice:0,
@@ -144,12 +145,12 @@ return{
     isAllChoose:false,
    accountantProduct:[],
    check:false,
-   goodId:''
+   goodId:'',
 }
 },
 methods:{
   cancel(){
-      document.getElementById('model_adymic').style.display='none';
+    this.isModel=false;
   },
   sureDelect(){
      axios.post('users/delectgood',{
@@ -159,7 +160,9 @@ if(res.data.status==1){
   console.log(res.data.msg);
 }else{
  this.getCartList();
-  document.getElementById('model_adymic').style.display='none';
+setTimeout(()=>{
+this.isModel=false;
+},500)
   this.singleTotal=[];
   this.isAllChoose=false;
   this.accountantProduct=[];
@@ -190,7 +193,7 @@ a.push(this.cartList[index]);
    },
   delectgood(goodId){
     this.goodId=goodId;
-      document.getElementById('model_adymic').style.display='inline';
+ this.isModel=true;
   },
 getCartList(){
   axios.post('users/cart').then((res)=>{
@@ -264,9 +267,9 @@ this.accountantProduct.push(singleData);
 },
 mounted(){
   this.getCartList();
-  document.getElementById('model_adymic').style.display='none';
 },
 computed: {
+
   toBackEndCheckList(){
     return this.$store.state.toBackEndCheckList;
   },
